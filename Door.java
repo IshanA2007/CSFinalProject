@@ -1,3 +1,7 @@
-public class Door {
-    
+public class Door 
+{
+    public boolean printyuwu()
+    {
+        return true;
+    }
 }
