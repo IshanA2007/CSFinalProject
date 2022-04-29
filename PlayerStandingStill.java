@@ -20,6 +20,9 @@ public class PlayerStandingStill implements Player{
       g.setColor(Color.BLACK);
       g.fillOval(headX, headY, 25, 25);
       g.fillRect(rectX, rectY, 25, 50);
+      g.fillRect(rectX, rectY+50, 10, 20);
+      g.fillRect(rectX+15, rectY+50, 10, 20);
+      
    }
    
    public void move(int changeX, int changeY){
