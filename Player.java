@@ -40,15 +40,38 @@ public class Player{
       else if(style.equals("up")){
          g.drawImage(upImage, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
+      else if(style.equals("right") || style.equals("left")){   
+         g.drawImage(upImage, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
+      }
+      
       
       
    }
+   public boolean inBetween(int var, int bot, int top){
+      if(var >= bot && var <= top){
+         return true;
+      }
+      return false;
+   }
    
    public void move(int changeX, int changeY){
-      headX += changeX;
-      headY += changeY;
-      rectX += changeX;
-      rectY += changeY;
+      if(rectX > 400){
+         rectX -= 50;
+      }
+      else if(rectX < 0){
+         rectX += 50;
+      }
+      
+      else if(inBetween(rectX, 0, 92)&&inBetween(rectY, 0, 125)){
+         rectY += 5;
+      }
+          
+      else if(rectX <= 400){
+         rectX += changeX;
+         rectY += changeY;
+      }
+      System.out.println(rectX);
+      System.out.println(rectY);
    }
 }
       
