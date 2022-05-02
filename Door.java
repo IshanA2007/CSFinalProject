@@ -1,6 +1,6 @@
 public class Door 
 {
-    public boolean printyuwu()
+    public boolean print()
     {
         return true;
     }
