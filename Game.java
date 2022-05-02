@@ -26,7 +26,8 @@ public class Game extends JPanel{
       myBuffer.setColor(Color.WHITE);   
       myBuffer.fillRect(0, 0, 700, 700);
       bckground = new StartingBackground(0);
-      player = new PlayerStandingStill();
+      player = new Player();
+      player.style = "still";
       
       
       t = new Timer(5, new AnimationListener());
@@ -52,7 +53,7 @@ public class Game extends JPanel{
          player = new PlayerMovingLeft();
       }
       */
-      player.draw(myBuffer);
+      player.draw(myBuffer, player.style);
       player.move(playerVelocityX, playerVelocityY);
       
       
@@ -75,18 +76,22 @@ public class Game extends JPanel{
    private class Key extends KeyAdapter{
       public void keyPressed(KeyEvent e){
          if(e.getKeyCode() == KeyEvent.VK_RIGHT && increaseVelocityRight){
+            player.style = "right";
             playerVelocityX += 8;
             increaseVelocityRight = false;
          }
          else if(e.getKeyCode() == KeyEvent.VK_LEFT && increaseVelocityLeft){
+            player.style = "left";
             playerVelocityX -= 8;
             increaseVelocityLeft = false;
          }
          else if(e.getKeyCode() == KeyEvent.VK_UP && increaseVelocityUp){
+            player.style = "up";
             playerVelocityY -= 8;
             increaseVelocityUp = false;
          }
          else if(e.getKeyCode() == KeyEvent.VK_DOWN && increaseVelocityDown){
+            player.style = "down";
             playerVelocityY += 8;
             increaseVelocityDown = false;
          }
