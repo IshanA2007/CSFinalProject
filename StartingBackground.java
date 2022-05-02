@@ -30,7 +30,7 @@ public class StartingBackground{
       //grass
       g.setColor(new Color(4, 120, 33));
       g.fillRect(0, 0, 700, 700);
-      g.
+      
       g.drawImage(image, 500-referenceX, 0, w+700-referenceX, 700, 0, 0, w, h, null);
       
    }
