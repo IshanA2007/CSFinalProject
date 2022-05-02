@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 
-public class Game extends JPanel{
+public class StartingScene extends JPanel{
 
    BufferedImage myImage;
    Graphics myBuffer;
@@ -20,7 +20,7 @@ public class Game extends JPanel{
    public boolean increaseVelocityRight = true;
    public boolean increaseVelocityLeft = true;
    
-   public Game(){
+   public StartingScene(){
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       myBuffer.setColor(Color.WHITE);   
@@ -45,14 +45,7 @@ public class Game extends JPanel{
    public void animate(){
       bckground.draw(myBuffer);
       bckground.moveBackground((int)(1.5*playerVelocityX));
-      /*
-      if(playerVelocityX > 0){
-         player = new PlayerMovingRight();
-      }
-      else if(playerVelocityX < 0){
-         player = new PlayerMovingLeft();
-      }
-      */
+      
       player.draw(myBuffer, player.style);
       player.move(playerVelocityX, playerVelocityY);
       
