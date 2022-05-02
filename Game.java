@@ -44,7 +44,7 @@ public class Game extends JPanel{
    
    public void animate(){
       bckground.draw(myBuffer);
-      bckground.moveBackground(2*playerVelocityX);
+      bckground.moveBackground((int)(1.5*playerVelocityX));
       /*
       if(playerVelocityX > 0){
          player = new PlayerMovingRight();
@@ -77,40 +77,40 @@ public class Game extends JPanel{
       public void keyPressed(KeyEvent e){
          if(e.getKeyCode() == KeyEvent.VK_RIGHT && increaseVelocityRight){
             player.style = "right";
-            playerVelocityX += 8;
+            playerVelocityX += 3;
             increaseVelocityRight = false;
          }
          else if(e.getKeyCode() == KeyEvent.VK_LEFT && increaseVelocityLeft){
             player.style = "left";
-            playerVelocityX -= 8;
+            playerVelocityX -= 3;
             increaseVelocityLeft = false;
          }
          else if(e.getKeyCode() == KeyEvent.VK_UP && increaseVelocityUp){
             player.style = "up";
-            playerVelocityY -= 8;
+            playerVelocityY -= 4;
             increaseVelocityUp = false;
          }
          else if(e.getKeyCode() == KeyEvent.VK_DOWN && increaseVelocityDown){
             player.style = "down";
-            playerVelocityY += 8;
+            playerVelocityY += 4;
             increaseVelocityDown = false;
          }
       }
       public void keyReleased(KeyEvent e){
          if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            playerVelocityX -= 8;
+            playerVelocityX -= 3;
             increaseVelocityRight = true;
          }
          else if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            playerVelocityX += 8;
+            playerVelocityX += 3;
             increaseVelocityLeft = true;
          }
          else if(e.getKeyCode() == KeyEvent.VK_UP){
-            playerVelocityY += 8;
+            playerVelocityY += 4;
             increaseVelocityUp = true;
          }
          else if(e.getKeyCode() == KeyEvent.VK_DOWN){
-            playerVelocityY -= 8;
+            playerVelocityY -= 4;
             increaseVelocityDown = true;
          }
       }
