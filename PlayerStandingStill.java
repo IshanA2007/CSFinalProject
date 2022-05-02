@@ -1,15 +1,29 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.*;
+import javax.imageio.*;
+import java.io.File;
+import java.awt.event.*;
+import java.io.IOException;
 
 public class PlayerStandingStill implements Player{
    public int headX;
    public int headY;
    public int rectX;
    public int rectY;
+   BufferedImage image;
+   int w, h;
    
    public PlayerStandingStill(){
+      try{
+         File stillImg = new File("face.png");
+         image = ImageIO.read(stillImg);
+         w = image.getWidth(null);
+         h = image.getHeight(null);
+      }
+      catch (IOException e){
+         System.exit(1);
+      }
       headX = 50;
       headY = 325;
       rectX = 50;
@@ -17,12 +31,7 @@ public class PlayerStandingStill implements Player{
    }
    
    public void draw(Graphics g){
-      g.setColor(Color.BLACK);
-      g.fillOval(headX, headY, 25, 25);
-      g.fillRect(rectX, rectY, 25, 50);
-      g.fillRect(rectX, rectY+50, 10, 20);
-      g.fillRect(rectX+15, rectY+50, 10, 20);
-      
+      g.drawImage(image, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
    }
    
    public void move(int changeX, int changeY){
