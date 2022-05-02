@@ -13,12 +13,12 @@ public class StartingBackground{
     int w;
     int h;
     int w1, h1;
-    Boundary[] boundaries;
+    //Boundary[] boundaries;
     
     
     public StartingBackground(int newRefX){
-      boundaries = new Boundary[5];
-      boundaries[1] = new Boundary(0, 0 
+      //boundaries = new Boundary[5];
+      //boundaries[1] = new Boundary(0, 0 
       try{
          File riverImg = new File("river-removebg-preview.png");
          image = ImageIO.read(riverImg);
@@ -36,7 +36,7 @@ public class StartingBackground{
       referenceX = newRefX;
     }
    
-   public void makeBoundaries(){
+   //public void makeBoundaries(){
       
     
    public void draw(Graphics g){
