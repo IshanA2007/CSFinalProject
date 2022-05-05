@@ -15,6 +15,7 @@ public class Player{
    BufferedImage upImage;
    int w, h;
    String style;
+   public boolean inBounds;
    
    public Player(){
       try{
@@ -41,7 +42,7 @@ public class Player{
          g.drawImage(upImage, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
       else if(style.equals("right") || style.equals("left")){   
-         g.drawImage(upImage, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
+         g.drawImage(image, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
       
       
@@ -55,23 +56,19 @@ public class Player{
    }
    
    public void move(int changeX, int changeY){
-      if(rectX > 400){
-         rectX -= 50;
+      if(rectX > 600){
+         rectX -= 5;
       }
       else if(rectX < 0){
-         rectX += 50;
+         rectX += 5;
       }
       
-      else if(inBetween(rectX, 0, 92)&&inBetween(rectY, 0, 125)){
-         rectY += 5;
-      }
-          
-      else if(rectX <= 400){
+            
+      else{
          rectX += changeX;
          rectY += changeY;
-      }
-      System.out.println(rectX);
-      System.out.println(rectY);
+      }      
+ 
    }
 }
       
