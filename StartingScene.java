@@ -42,6 +42,7 @@ public class StartingScene extends JPanel{
       t.start();
    }
    
+   
    public void animate(){
       bckground.draw(myBuffer);
       bckground.moveBackground((int)(1.5*playerVelocityX));
