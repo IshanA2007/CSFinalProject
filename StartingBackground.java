@@ -8,22 +8,15 @@ import java.io.IOException;
 
 public class StartingBackground{
     public int referenceX;
-    private BufferedImage image;
     private BufferedImage bckImg;
     int w;
     int h;
     int w1, h1;
-    //Boundary[] boundaries;
     
     
     public StartingBackground(int newRefX){
-      //boundaries = new Boundary[5];
-      //boundaries[1] = new Boundary(0, 0 
+      
       try{
-         File riverImg = new File("river-removebg-preview.png");
-         image = ImageIO.read(riverImg);
-         w = image.getWidth(null);
-         h = image.getHeight(null);
          File bckgrndImg = new File("pelasework.jpg");
          bckImg = ImageIO.read(bckgrndImg);
          w1 = bckImg.getWidth(null);
@@ -36,7 +29,7 @@ public class StartingBackground{
       referenceX = newRefX;
     }
    
-   //public void makeBoundaries(){
+   
       
     
    public void draw(Graphics g){
@@ -49,13 +42,13 @@ public class StartingBackground{
    
    public void moveBackground(int change){
       if(referenceX <= 0){
-            referenceX += 50;
+            referenceX += 5;
          }
       else if(referenceX <= 518){
          referenceX += change;
       }
       else if(referenceX > 518){
-         referenceX -= 50;
+         referenceX -= 5;
       }
       
       
