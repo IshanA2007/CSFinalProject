@@ -1,4 +1,4 @@
-    import javax.swing.*;
+import javax.swing.*;
 import java.awt.*;
 
 public class main{
@@ -7,7 +7,7 @@ public class main{
       frame.setSize(700, 700);
       frame.setLocation(20, 20);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setContentPane(new Game());
+      frame.setContentPane(new MasterGUI());
       frame.setVisible(true);
    }
 }    

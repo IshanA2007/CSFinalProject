@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 
 public class TutorialScene extends JPanel{
-   BufferedImage myImage;
+   BufferedImage myImage;  
    Graphics myBuffer;
    TutorialBackground bck = new TutorialBackground();
    Player player;
@@ -20,13 +20,14 @@ public class TutorialScene extends JPanel{
    public boolean dialogue1IsComplete = false;
    public boolean dialogue2IsComplete = false;
    public boolean displayText = false;
-   public TutorialScene(){
+   PlayerStats stats;
+   public TutorialScene(PlayerStats pStats){
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       player = new Player();
       player.style = "still";
       t = new Timer(5, new AnimationListener());
-      
+      stats = pStats;
       addKeyListener(new Key());
       setFocusable(true);
       
@@ -38,15 +39,15 @@ public class TutorialScene extends JPanel{
    }
    public void animate(){
       if(bck.stage >= 0){
-         bck.drawMoves(myBuffer, displayText);
+         bck.drawMoves(myBuffer, displayText, player.rectX, player.rectY);
       }
       if(bck.stage >= 1 && dialogue1IsComplete){
-         bck.drawWeapons(myBuffer, displayText);
+         bck.drawWeapons(myBuffer, displayText, player.rectX, player.rectY);
       }
       if(bck.stage >= 2 && dialogue2IsComplete){
-         bck.drawObjective(myBuffer, displayText);
+         bck.drawObjective(myBuffer, displayText, player.rectX, player.rectY);
       }
-      player.draw(myBuffer, player.style);
+      player.draw(myBuffer, player.style, stats.health, false, stats.weapons);
       player.move(playerVelocityX, playerVelocityY);
       if(bck.speakStage == 0){
          bck.drawMoveSpeech(myBuffer);

@@ -4,7 +4,7 @@ public class Boundary{
    public int corner2X;
    public int corner2Y;
    
-   public Boundary(ncorner1X, ncorner1Y, ncorner2X, ncorner2Y){
+   public Boundary(int ncorner1X, int ncorner1Y, int ncorner2X, int ncorner2Y){
       corner1X = ncorner1X;
       corner1Y = ncorner1Y;
       corner2X = ncorner2X;

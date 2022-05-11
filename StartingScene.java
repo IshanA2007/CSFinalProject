@@ -14,13 +14,14 @@ public class StartingScene extends JPanel{
    public int playerVelocityX = 0;
    public int playerVelocityY = 0;
    Player player;
-   
+   PlayerStats stats;
    public boolean increaseVelocityUp = true;
    public boolean increaseVelocityDown = true;
    public boolean increaseVelocityRight = true;
    public boolean increaseVelocityLeft = true;
-   
-   public StartingScene(){
+   public int doorNum = 0;
+   public boolean isOver = false;
+   public StartingScene(PlayerStats pStats){
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       myBuffer.setColor(Color.WHITE);   
@@ -28,7 +29,7 @@ public class StartingScene extends JPanel{
       bckground = new StartingBackground(0);
       player = new Player();
       player.style = "still";
-      
+      stats = pStats;
       
       t = new Timer(5, new AnimationListener());
       
@@ -47,9 +48,9 @@ public class StartingScene extends JPanel{
       bckground.draw(myBuffer);
       bckground.moveBackground((int)(1.5*playerVelocityX));
       
-      player.draw(myBuffer, player.style);
+      player.draw(myBuffer, player.style, stats.health, true, stats.weapons);
       player.move(playerVelocityX, playerVelocityY);
-      
+      stats.setDamage(stats.getWeaponDamage(player.curWeapon));
       
       repaint();
    }
@@ -57,6 +58,10 @@ public class StartingScene extends JPanel{
    public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
+   }
+   
+   public PlayerStats getStats(){
+      return stats;
    }
    
    private class AnimationListener implements ActionListener

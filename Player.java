@@ -5,6 +5,8 @@ import javax.imageio.*;
 import java.io.File;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.*;
 
 public class Player{
    public int headX;
@@ -16,6 +18,8 @@ public class Player{
    int w, h;
    String style;
    public boolean inBounds;
+   public int maxCurWeapon = 0;
+   public String curWeapon;
    
    public Player(){
       try{
@@ -34,7 +38,7 @@ public class Player{
    }
 
    
-   public void draw(Graphics g, String style){
+   public void draw(Graphics g, String style, int health, boolean drawHealth, ArrayList<String> weapons){
       if(style.equals("still")||style.equals("down")){
          g.drawImage(image, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
@@ -44,6 +48,28 @@ public class Player{
       else if(style.equals("right") || style.equals("left")){   
          g.drawImage(image, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
+      if(drawHealth){
+         g.setColor(Color.RED);
+         g.fillRect(rectX, rectY, 100, 10);
+      }
+      g.setColor(Color.BLACK);
+      g.fillRect(300, 670, 100, 30);
+      
+      for(int i = 0; i < weapons.size(); i++){
+         if(weapons.get(i).equals("Fist")){;
+            curWeapon = weapons.get(i);
+         }
+      }
+      
+      g.drawImage(image, 300, 670, 350, 700, 0, 0, w, h, null);
+      g.setFont(new Font("Purisa", Font.BOLD, 15));
+      g.drawString("Current Weapon: " + curWeapon, 300, 670);
+      
+      
+      
+      
+      
+      
       
       
       
