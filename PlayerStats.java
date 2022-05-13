@@ -5,6 +5,7 @@ public class PlayerStats{
    public int shield;
    public int health;
    public ArrayList<String> weapons; 
+   public int combStage;
    
    
    public PlayerStats(int newDmg, int newShld, int newHlth){
@@ -13,6 +14,7 @@ public class PlayerStats{
       health = newHlth;
       weapons = new ArrayList<String>();
       weapons.add("Fist");
+      combStage = 1;
    }
    
    public void addDamage(int incDmg){
@@ -37,6 +39,10 @@ public class PlayerStats{
    
    public void setHealth(int newHealth){
       health = newHealth;
+   }
+   
+   public void addStage(){
+      combStage += 1;
    }
    
    public int getWeaponDamage(String weapon){

@@ -49,8 +49,9 @@ public class Player{
          g.drawImage(image, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
       if(drawHealth){
+         
          g.setColor(Color.RED);
-         g.fillRect(rectX, rectY, 100, 10);
+         g.fillRect(rectX, rectY, health, 10);
       }
       g.setColor(Color.BLACK);
       g.fillRect(300, 670, 100, 30);

@@ -16,7 +16,23 @@ public class Projectile{
    }
    
    public void draw(Graphics g){
+      g.setColor(Color.YELLOW);
+      g.fillRect(projX, projY, projX + 50, projY + 10);
    }
+   
+   public void move(int playerX, int playerY){
+      projX -= 1;
+    
+   }
+   
+   public int getX(){
+      return projX;
+   }
+   
+   public int getY(){
+      return projY;
+   }
+      
    
 }
       

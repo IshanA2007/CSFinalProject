@@ -15,15 +15,18 @@ public class Archer extends Enemy{
    public ArrayList<Projectile> curProj;
    public boolean isDefeated = false;
    public boolean shoot = true;
+   public int archStage;
    
    
-   public Archer(){
-      health = 50;
+   public Archer(int stage){
+      curProj = new ArrayList<Projectile>();
+      archStage = stage;
+      health = 10 * archStage;
       Random rand = new Random();
       int upperbound = 100;
       archX = rand.nextInt(upperbound)+500;
       archY = rand.nextInt(upperbound+400)+100;
-      dmg = 10;
+      dmg = 10 * (archStage/2);
    }
    
    public void checkProjectiles(){
@@ -32,17 +35,26 @@ public class Archer extends Enemy{
             curProj.remove(i);
          }
       }
-      if(curProj.size() < 1){
+      if(curProj.size() == 0){
          shoot = true;
       }
-      else{
+      else{ 
          shoot = false;
       }
          
+     
+   }
+   
+   public int getProjX(){
+      return curProj.get(0).projX;
+   }
+   
+   public int getProjY(){
+      return curProj.get(0).projY;
    }
    
    public void attack(int playerX, int playerY){
-      if(shoot = true){
+      if(shoot){
          curProj.add(new Projectile(archX, archY, dmg));
       }
    }
@@ -59,8 +71,11 @@ public class Archer extends Enemy{
       }
    }
    
+   
       
-         
+   public int getDamage(){
+      return dmg;
+   }
          
    
    public int getX(){
@@ -76,6 +91,8 @@ public class Archer extends Enemy{
    }
    
    public void draw(Graphics g){
+      //archer img here
+      g.setColor(Color.RED);
       g.fillRect(10, 10, 10, 10);
    }
 }

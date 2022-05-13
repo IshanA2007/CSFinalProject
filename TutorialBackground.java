@@ -15,7 +15,8 @@ public class TutorialBackground{
    BufferedImage HammerImage, SwordImage, SpearImage;
    BufferedImage ShieldImage;
    BufferedImage ChestplateImage;
-   int w, h, w1, h1, wt, ht, sw, sh, hw, hh, sww, swh, cpw, cph, shw, shh;
+   BufferedImage EckImage;
+   int w, h, w1, h1, wt, ht, sw, sh, hw, hh, sww, swh, cpw, cph, shw, shh, ew, eh;
    int[] xPoints;
    int[] yPoints;
    
@@ -25,6 +26,7 @@ public class TutorialBackground{
        try{
          File stillImg = new File("face.png");
          image = ImageIO.read(stillImg);
+         File eckImg = new File("Eck.png");
          File tutorialImg = new File("tutorial.png");
          TutorialImage = ImageIO.read(tutorialImg);
          wt = TutorialImage.getWidth(null);
@@ -33,7 +35,9 @@ public class TutorialBackground{
          w = image.getWidth(null);
          h = image.getHeight(null);
          File heemImg = new File("DaHeem.png");
-         
+         EckImage = ImageIO.read(eckImg);
+         ew = EckImage.getWidth(null);
+         eh = EckImage.getWidth(null);
          HeemImage = ImageIO.read(heemImg);
          
          w1 = HeemImage.getWidth(null);
@@ -91,7 +95,7 @@ public class TutorialBackground{
       g.setFont(new Font("Purisa", Font.BOLD, 20));
       g.setColor(Color.BLACK);
       if(display){
-         g.drawString("Take a look around, then press R to go to next scene", 250, 250);
+         g.drawString("Take a look around, then press R to go to next scene", 100, 250);
       }
       
       
@@ -103,7 +107,7 @@ public class TutorialBackground{
       g.setFont(new Font("Purisa", Font.BOLD, 20));
       g.setColor(Color.BLACK);
       if(display){
-         g.drawString("Take a look around, then press R to go to next scene", 250, 250);
+         g.drawString("Take a look around, then press R to go to next scene", 100, 250);
       }
       g.drawImage(SpearImage, 200, 300, 200 + sw, 300+sh, 0, 0, sw, sh, null);
       if(playerX > 150 && playerX < 250 && playerY > 250 && playerY<350){
@@ -146,8 +150,9 @@ public class TutorialBackground{
       g.setFont(new Font("Purisa", Font.BOLD, 20));
       g.setColor(Color.BLACK);
       if(display){
-         g.drawString("Take a look around, then press R to go to next scene", 250, 250);
+         g.drawString("Take a look around, then press R to go to next scene", 100, 250);
       }
+      g.drawImage(EckImage, 335, 100, 335+ew, 100+eh, 0, 0, ew, eh, null);
    }
    public void drawMoveSpeech(Graphics g){
       g.setColor(Color.WHITE);

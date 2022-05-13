@@ -6,7 +6,8 @@ import java.awt.image.*;
 public class MasterGUI extends JPanel{
    StartingScene g;
    TutorialScene n;
-   PlayerStats stats = new PlayerStats(0, 0, 0);
+   ArenaScene a;
+   PlayerStats stats = new PlayerStats(0, 0, 100);
    public final boolean owo = true;
    public int doorNum = 0; 
    public int curScene = 1;
@@ -22,7 +23,9 @@ public class MasterGUI extends JPanel{
       setLayout(new BorderLayout());
       n = new TutorialScene(stats);
       g = new StartingScene(stats);
-      add(n);
+      
+      a = new ArenaScene(stats);
+      add(a);
       
       
    }

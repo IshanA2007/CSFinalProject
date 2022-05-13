@@ -6,6 +6,7 @@ import java.io.File;
 import java.awt.event.*;
 import java.io.IOException;
 abstract class Enemy{
+   int health;
    
    abstract void attack(int playerX, int playerY);
    
@@ -20,4 +21,14 @@ abstract class Enemy{
    abstract int getHealth();
    
    abstract void drawProjectiles(Graphics g);
+   
+   abstract void moveProjectiles(int playerX, int playerY);
+   
+   abstract int getProjX();
+   
+   abstract int getProjY();
+   
+   abstract int getDamage();
+   
+   
 }
