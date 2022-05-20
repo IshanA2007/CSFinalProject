@@ -10,4 +10,4 @@ public class main{
       frame.setContentPane(new MasterGUI());
       frame.setVisible(true);
    }
-}    
+}     

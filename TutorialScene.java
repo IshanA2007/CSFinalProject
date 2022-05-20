@@ -20,6 +20,7 @@ public class TutorialScene extends JPanel{
    public boolean dialogue1IsComplete = false;
    public boolean dialogue2IsComplete = false;
    public boolean displayText = false;
+   public boolean isOver = false;
    PlayerStats stats;
    public TutorialScene(PlayerStats pStats){
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
@@ -47,7 +48,7 @@ public class TutorialScene extends JPanel{
       if(bck.stage >= 2 && dialogue2IsComplete){
          bck.drawObjective(myBuffer, displayText, player.rectX, player.rectY);
       }
-      player.draw(myBuffer, player.style, stats.health, false, stats.weapons);
+      player.draw(myBuffer, player.style, stats.health, false, stats.curWeapon());
       player.move(playerVelocityX, playerVelocityY);
       if(bck.speakStage == 0){
          bck.drawMoveSpeech(myBuffer);
@@ -58,12 +59,18 @@ public class TutorialScene extends JPanel{
       else if(bck.speakStage == 2 && bck.stage == 2){
          bck.drawObjectiveSpeech(myBuffer);
       }
+      else if(bck.stage == 3){
+         isOver = true;
+      }
       
       
       
       repaint();
    }
    
+   public PlayerStats getStats(){
+      return stats;
+   }
    public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field

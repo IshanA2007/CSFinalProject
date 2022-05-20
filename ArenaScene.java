@@ -16,6 +16,7 @@ public class ArenaScene extends JPanel{
    public boolean increaseVelocityUp = true;
    public boolean increaseVelocityDown = true;
    public boolean increaseVelocityRight = true;
+   public int count = 0;
    public boolean increaseVelocityLeft = true;
    public boolean attack = false;
    public boolean isOver = false;
@@ -53,21 +54,32 @@ public class ArenaScene extends JPanel{
       }
       
       bckg.draw(myBuffer);
-      player.draw(myBuffer, player.style, stats.health, true, stats.weapons);
+      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon());
       player.move(playerVelocityX, playerVelocityY);
       //add a curWeapon function!!! so much effort :c (for getWEaponDamage) will also help with toolbar
-      bckg.getAttacked(player.rectX, player.rectY, attack, stats.getWeaponDamage("Fist"));
+      if(attack){
+         bckg.getAttacked(player.rectX, player.rectY, attack, stats.getWeaponDamage(stats.curWeapon()));
+      }
       bckg.archerAttack(player.rectX, player.rectY, myBuffer);
       stats.health -= bckg.swordsmenAttack(player.rectX, player.rectY);
       stats.health -= bckg.archerAttackDamage(player.rectX, player.rectY);
       
       if(stats.health <= 0){
+         myBuffer.setColor(Color.BLACK);
+         myBuffer.fillRect(0, 0, 700, 700);
+         isOver = true;
+      }
+      else if(bckg.levelCleared()){
+         myBuffer.setColor(Color.BLACK);
+         myBuffer.fillRect(0, 0, 700, 700);
          isOver = true;
       }
       else{
          if(stats.health < 100){
-         
-            stats.health += 1;
+            count+= 1;
+            if(count%5 == 0){
+               stats.health += 1;
+            }
          }
       }      
       repaint();
@@ -104,6 +116,9 @@ public class ArenaScene extends JPanel{
             playerVelocityY += 4;
             increaseVelocityDown = false;
          }
+         else if(e.getKeyCode()== KeyEvent.VK_SPACE){
+            attack = true;
+         }
          
             
       }
@@ -123,6 +138,9 @@ public class ArenaScene extends JPanel{
          else if(e.getKeyCode() == KeyEvent.VK_DOWN){
             playerVelocityY -= 4;
             increaseVelocityDown = true;
+         }
+         else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            attack = false;
          }
          
          

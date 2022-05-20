@@ -13,13 +13,14 @@ public class Player{
    public int headY;
    public int rectX;
    public int rectY;
+   public int sww, swh, spw, sph, hw, hh;
    BufferedImage image;
    BufferedImage upImage;
    int w, h;
    String style;
    public boolean inBounds;
    public int maxCurWeapon = 0;
-   public String curWeapon;
+   BufferedImage SwordImage, SpearImage, HammerImage;
    
    public Player(){
       try{
@@ -29,6 +30,18 @@ public class Player{
          upImage = ImageIO.read(upImg);
          w = image.getWidth(null);
          h = image.getHeight(null);
+         File swordImg = new File("sword.png");
+         File spearImg = new File("spear.png");
+         File hammerImg = new File("hammer.png");
+         SwordImage = ImageIO.read(swordImg);
+         SpearImage = ImageIO.read(spearImg);
+         HammerImage = ImageIO.read(hammerImg);
+         sww = SwordImage.getWidth(null);
+         swh = SwordImage.getHeight(null);
+         spw = SpearImage.getWidth(null);
+         sph = SpearImage.getHeight(null);
+         hw = HammerImage.getWidth(null);
+         hh = HammerImage.getHeight(null);
       }
       catch (IOException e){
          System.exit(1);
@@ -38,7 +51,7 @@ public class Player{
    }
 
    
-   public void draw(Graphics g, String style, int health, boolean drawHealth, ArrayList<String> weapons){
+   public void draw(Graphics g, String style, int health, boolean drawHealth, String curWeapon){
       if(style.equals("still")||style.equals("down")){
          g.drawImage(image, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
@@ -56,16 +69,26 @@ public class Player{
       g.setColor(Color.BLACK);
       g.fillRect(300, 670, 100, 30);
       
-      for(int i = 0; i < weapons.size(); i++){
-         if(weapons.get(i).equals("Fist")){;
-            curWeapon = weapons.get(i);
-         }
+      
+      
+      //put weapon images in hotbar here
+      if(curWeapon.equals("Fist")){
+         
+      }
+      else if(curWeapon.equals("Sword")){
+         g.drawImage(SwordImage, 250, 630, 300+sww, 670+swh, 0, 0, sww, swh, null);
+      }
+      else if(curWeapon.equals("Spear")){
+         g.drawImage(SpearImage, 250, 630, 300+spw, 670+sph, 0, 0, spw, sph, null);
+      }
+      else if(curWeapon.equals("Hammer")){
+         g.drawImage(HammerImage, 250, 630, 300+hw, 670+hh, 0, 0, hw, hh, null);
       }
       
-      g.drawImage(image, 300, 670, 350, 700, 0, 0, w, h, null);
       g.setFont(new Font("Purisa", Font.BOLD, 15));
-      g.drawString("Current Weapon: " + curWeapon, 300, 670);
-      
+      g.drawString("Current Weapon: " + curWeapon, 300, 668);
+      g.drawString("Health: " + health + "/100", 300, 655);
+         
       
       
       

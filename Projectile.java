@@ -17,12 +17,12 @@ public class Projectile{
    
    public void draw(Graphics g){
       g.setColor(Color.YELLOW);
-      g.fillRect(projX, projY, projX + 50, projY + 10);
+      
+      g.fillRect(projX, projY, 50, 10);
    }
    
    public void move(int playerX, int playerY){
-      projX -= 1;
-    
+      projX -= 6;
    }
    
    public int getX(){

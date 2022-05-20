@@ -5,13 +5,14 @@ import java.awt.image.*;
 
 public class MasterGUI extends JPanel{
    StartingScene g;
-   TutorialScene n;
+   TutorialScene tutorial;
    ArenaScene a;
+   FarmScene f;
    PlayerStats stats = new PlayerStats(0, 0, 100);
    public final boolean owo = true;
    public int doorNum = 0; 
    public int curScene = 1;
-   public int count = 0;
+   public int count = 1;
    public boolean gInProgress = true;
    public boolean oneInProgress = false;
    public boolean twoInProgress = false;
@@ -21,56 +22,61 @@ public class MasterGUI extends JPanel{
 
    public MasterGUI(){
       setLayout(new BorderLayout());
-      n = new TutorialScene(stats);
       g = new StartingScene(stats);
-      
+      f = new FarmScene(stats);
       a = new ArenaScene(stats);
-      add(a);
+      add(f);
+      
       
       
    }
    
-   /*public void gameLoop(){
+   
+   
+   public void gameLoop(){
+      while(count == 1){
       if(gInProgress){
          if(g.isOver){
             stats = g.getStats();
             gInProgress = false;
             remove(g);
-            if(g.doorNum == 1){
-               1InProgress = true;
+            //if(g.doorNum == 1){
+            oneInProgress = true;
                tutorial = new TutorialScene(stats);
                add(tutorial);
-            }
-            else if(g.doorNum == 2){
-               2InProgress = true;
-               farm = new FarmScene(stats);
-               add(farm);
-            }
-            else if(g.doorNum == 3){
-               3InProgress = true;
-               arena = new ArenaScene(stats);
-               add(arena);
-            }
-            else if(g.doorNum == 4){
+            //}
+            //else if(g.doorNum == 2){
+               //2InProgress = true;
+               //farm = new FarmScene(stats);
+               //add(farm);
+            //}
+            //else if(g.doorNum == 3){
+               //3InProgress = true;
+               //arena = new ArenaScene(stats);
+               //add(arena);
+            //}
+            /*else if(g.doorNum == 4){
                4InProgress = true;
                shop = new ShopScene(stats);
                add(shop);
             }
+            */
             validate();
          }
-      }
       
-      else if(1InProgress){
+      
+      else if(oneInProgress){
          if(tutorial.isOver){
             stats = tutorial.getStats();
-            1InProgress = false;
+            oneInProgress = false;
             remove(tutorial);
             gInProgress = true;
-            g = new StartingBackground(stats);
+            g = new StartingScene(stats);
             add(g);
             validate();      
          }
       }
+      /*
       
       else if(2InProgress){
          if(farm.isOver){
@@ -83,11 +89,13 @@ public class MasterGUI extends JPanel{
             validate();
          }
       }
+      */
          
          
    }
+   }
 }
-*/
+
 
          
             

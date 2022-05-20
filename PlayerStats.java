@@ -6,6 +6,7 @@ public class PlayerStats{
    public int health;
    public ArrayList<String> weapons; 
    public int combStage;
+   public int money;
    
    
    public PlayerStats(int newDmg, int newShld, int newHlth){
@@ -15,6 +16,7 @@ public class PlayerStats{
       weapons = new ArrayList<String>();
       weapons.add("Fist");
       combStage = 1;
+      money = 0;
    }
    
    public void addDamage(int incDmg){
@@ -36,6 +38,28 @@ public class PlayerStats{
    public void addHealth(int incHealth){
       shield += incHealth;
    }
+   
+   public String curWeapon(){
+      String a = "";
+      for(int i = 0; i < weapons.size(); i++){
+         if(weapons.get(i).equals("Spear")){
+            a = "Spear";
+         }
+          else if(weapons.get(i).equals("Hammer")){
+            a = "Hammer";
+         }
+         
+         else if(weapons.get(i).equals("Sword")){
+            a = "Sword";
+         }
+         else{
+            a = "Fist";
+         }
+      }
+      return a;
+   }
+   
+      
    
    public void setHealth(int newHealth){
       health = newHealth;

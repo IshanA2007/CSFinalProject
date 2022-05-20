@@ -6,6 +6,7 @@ import javax.imageio.*;
 import java.io.File;
 import java.awt.event.*;
 import java.io.IOException;
+
 public class Archer extends Enemy{
 
    public int health;
@@ -23,10 +24,10 @@ public class Archer extends Enemy{
       archStage = stage;
       health = 10 * archStage;
       Random rand = new Random();
-      int upperbound = 100;
-      archX = rand.nextInt(upperbound)+500;
-      archY = rand.nextInt(upperbound+400)+100;
-      dmg = 10 * (archStage/2);
+      int upperbound = 200;
+      archX = rand.nextInt(upperbound)+300;
+      archY = rand.nextInt(upperbound+300)+100;
+      dmg = 3 * (archStage);
    }
    
    public void checkProjectiles(){
@@ -59,10 +60,13 @@ public class Archer extends Enemy{
       }
    }
    
+   public void subHealth(int dmg){
+      health -= dmg;
+   }
+   
    public void moveProjectiles(int playerX, int playerY){
-      for(int i = 0; i < curProj.size(); i++){
-         curProj.get(i).move(playerX, playerY);
-      }
+      curProj.get(0).move(playerX, playerY);
+
    }
    
    public void drawProjectiles(Graphics g){
@@ -92,8 +96,9 @@ public class Archer extends Enemy{
    
    public void draw(Graphics g){
       //archer img here
-      g.setColor(Color.RED);
-      g.fillRect(10, 10, 10, 10);
+      //System.out.println(archX);
+      g.setColor(Color.BLUE);
+      g.fillRect(archX, archY, 5, 10);
    }
 }
      

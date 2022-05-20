@@ -24,7 +24,6 @@ public class ArenaBackground{
       for(int i = 0; i < stage; i++){
          enemies.add(new Swordsman(enemies.get(i).getX(), enemies.get(i).getY(), stage));
       }
-   
    }
    
    public void draw(Graphics g){
@@ -36,7 +35,9 @@ public class ArenaBackground{
          int enemyX = enemies.get(i).getX();
          int enemyY = enemies.get(i).getY();
          //drawing healthbar
-         g.fillRect(enemyX - 10, enemyY - 10, enemyX + enemies.get(i).getHealth(), enemyY - 2);
+         
+         g.setColor(Color.RED);
+         g.fillRect(enemyX - 10, enemyY - 12, enemies.get(i).getHealth()*2, 10);
       }
    
    }
@@ -50,21 +51,23 @@ public class ArenaBackground{
    }
       
    public int archerAttackDamage(int playerX, int playerY){
-      Enemy arch = enemies.get(0);
-      int projX = arch.getProjX();
-      int projY = arch.getProjY();
-      if(Math.abs(projX - playerX) < 7 && Math.abs(projY - playerY) < 7){
-         return arch.getDamage();
-      }
-      return 0;
+      
+         Enemy arch = enemies.get(0);
+         int projX = arch.getProjX();
+      
+         int projY = arch.getProjY();
+         if(Math.abs(projX - playerX) < 30 && Math.abs(projY - playerY) < 30){
+            return arch.getDamage();
+         }
+         return 0;
    }
    
    public void getAttacked(int playerX, int playerY, boolean attack, int weaponDmg){
       for(int i = 0; i < enemies.size(); i++){  
          int enemyX = enemies.get(i).getX();
          int enemyY = enemies.get(i).getY();
-         if(attack && (Math.abs(enemyX - playerX) < 20) && (Math.abs(enemyY - playerY) < 20)){
-            enemies.get(i).health -= weaponDmg;
+         if((Math.abs(enemyX - playerX) < 40) && (Math.abs(enemyY - playerY) < 40)){
+            enemies.get(i).subHealth(weaponDmg);
          }
       }
    }
@@ -89,6 +92,9 @@ public class ArenaBackground{
       if(enemies.size() > 0){
          for(int i = 0; i < enemies.size(); i++){
             if(enemies.get(i).getHealth()<= 0){
+               if(enemies.size() == 1){
+                  return true;
+               }
                enemies.remove(enemies.get(i));
             }
          }

@@ -24,6 +24,8 @@ public class Swordsman extends Enemy{
       catch (IOException e){
          System.exit(1);
       }
+      swX = 150;
+      swY = 150;
       dmg = stage;
       health = 5*stage;
    }
@@ -38,15 +40,21 @@ public class Swordsman extends Enemy{
       attahck = false;
    }
    
+   
    public void checkProjectiles(){
    }
    
    public void draw(Graphics g){
+      
       g.drawImage(SwordsmanImage, swX, swY, swX+sw, swY+sh, 0, 0, sw, sh, null);
    }
    
    public int getX(){
       return swX;
+   }
+   
+   public void subHealth(int dmg){
+      health -= dmg;
    }
    
    public int getY(){

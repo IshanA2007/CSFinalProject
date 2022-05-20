@@ -8,6 +8,8 @@ import java.io.IOException;
 abstract class Enemy{
    int health;
    
+   abstract void subHealth(int dmg);
+   
    abstract void attack(int playerX, int playerY);
    
    abstract void checkProjectiles();
