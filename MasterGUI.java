@@ -18,17 +18,15 @@ public class MasterGUI extends JPanel{
    public boolean twoInProgress = false;
    public boolean threeInProgress = false;
    public boolean fourInProgress = false;
-  
+   ShopScene s;
 
    public MasterGUI(){
       setLayout(new BorderLayout());
       g = new StartingScene(stats);
       f = new FarmScene(stats);
       a = new ArenaScene(stats);
-      add(f);
-      
-      
-      
+      s = new ShopScene(stats);
+      add(s);
    }
    
    
@@ -96,6 +94,9 @@ public class MasterGUI extends JPanel{
    }
 }
 
+            
+      
+   
 
          
             
@@ -106,6 +107,7 @@ public class MasterGUI extends JPanel{
       
       
   }
+
 
    
    

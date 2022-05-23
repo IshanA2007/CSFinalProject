@@ -7,6 +7,7 @@ public class PlayerStats{
    public ArrayList<String> weapons; 
    public int combStage;
    public int money;
+   public int count = 0;
    
    
    public PlayerStats(int newDmg, int newShld, int newHlth){
@@ -42,20 +43,34 @@ public class PlayerStats{
    public String curWeapon(){
       String a = "";
       for(int i = 0; i < weapons.size(); i++){
-         if(weapons.get(i).equals("Spear")){
-            a = "Spear";
-         }
-          else if(weapons.get(i).equals("Hammer")){
-            a = "Hammer";
-         }
-         
-         else if(weapons.get(i).equals("Sword")){
-            a = "Sword";
-         }
-         else{
-            a = "Fist";
+         if(weapons.get(i).equals("Sword")){
+            count = 1;
          }
       }
+      for(int i = 0; i < weapons.size(); i++){
+         if(weapons.get(i).equals("Spear")){
+            count = 2;
+         }
+      }
+      for(int i = 0; i < weapons.size(); i++){
+         if(weapons.get(i).equals("Hammer")){
+            count = 3;
+         }
+      }
+         
+      if(count == 1){
+         a = "Sword";
+      }
+      else if(count == 2){
+         a = "Spear";
+      }
+      else if(count == 3){
+         a = "Hammer";
+      }
+      else{
+         a = "Fists";
+      }   
+      
       return a;
    }
    

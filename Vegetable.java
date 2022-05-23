@@ -1,6 +1,6 @@
 
 abstract class Vegetable{
-   public int value;
+   public static int value;
    public Vegetable(int newVal){
       value = newVal;
    }

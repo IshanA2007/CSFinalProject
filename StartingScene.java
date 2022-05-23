@@ -30,7 +30,6 @@ public class StartingScene extends JPanel{
       player = new Player();
       player.style = "still";
       stats = pStats;
-      
       t = new Timer(5, new AnimationListener());
       
       addKeyListener(new Key());
@@ -48,7 +47,7 @@ public class StartingScene extends JPanel{
       bckground.draw(myBuffer);
       bckground.moveBackground((int)(1.5*playerVelocityX));
       
-      player.draw(myBuffer, player.style, 100, true, stats.curWeapon());
+      player.draw(myBuffer, player.style, 100, true, stats.curWeapon(), stats.money, stats.shield);
       player.move(playerVelocityX, playerVelocityY);
       stats.setDamage(stats.getWeaponDamage(stats.curWeapon()));
       
@@ -98,6 +97,7 @@ public class StartingScene extends JPanel{
             isOver = true;
          }
       }
+      
       public void keyReleased(KeyEvent e){
          if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             playerVelocityX -= 3;

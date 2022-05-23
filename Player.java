@@ -13,9 +13,11 @@ public class Player{
    public int headY;
    public int rectX;
    public int rectY;
-   public int sww, swh, spw, sph, hw, hh;
+   public int sww, swh, spw, sph, hw, hh, cw, ch, siw, sih, spiw, spih, hiw, hih;
    BufferedImage image;
    BufferedImage upImage;
+   BufferedImage CoinImage;
+   BufferedImage SwordItemImage, SpearItemImage, HammerItemImage;
    int w, h;
    String style;
    public boolean inBounds;
@@ -24,9 +26,22 @@ public class Player{
    
    public Player(){
       try{
+         File swordItemImg = new File("sworditem.png");
+         File spearItemImg = new File("spearitem.png");
+         File hammerItemImg = new File("hammeritem.png");
+         SwordItemImage = ImageIO.read(swordItemImg);
+         SpearItemImage = ImageIO.read(spearItemImg);
+         HammerItemImage = ImageIO.read(hammerItemImg);
+         siw = SwordItemImage.getWidth(null);
+         sih = SwordItemImage.getHeight(null);
+         spiw = SpearItemImage.getWidth(null);
+         spih = SpearItemImage.getHeight(null);
+         hiw = HammerItemImage.getWidth(null);
+         hih = HammerItemImage.getHeight(null);
          File stillImg = new File("face.png");
          image = ImageIO.read(stillImg);
          File upImg = new File("back.png");
+         File coinImg = new File("coin.png");
          upImage = ImageIO.read(upImg);
          w = image.getWidth(null);
          h = image.getHeight(null);
@@ -36,12 +51,16 @@ public class Player{
          SwordImage = ImageIO.read(swordImg);
          SpearImage = ImageIO.read(spearImg);
          HammerImage = ImageIO.read(hammerImg);
+         CoinImage = ImageIO.read(coinImg);
          sww = SwordImage.getWidth(null);
          swh = SwordImage.getHeight(null);
          spw = SpearImage.getWidth(null);
          sph = SpearImage.getHeight(null);
          hw = HammerImage.getWidth(null);
          hh = HammerImage.getHeight(null);
+         cw = CoinImage.getWidth(null);
+         ch = CoinImage.getHeight(null);
+         
       }
       catch (IOException e){
          System.exit(1);
@@ -51,7 +70,7 @@ public class Player{
    }
 
    
-   public void draw(Graphics g, String style, int health, boolean drawHealth, String curWeapon){
+   public void draw(Graphics g, String style, int health, boolean drawHealth, String curWeapon, int money, int shield){
       if(style.equals("still")||style.equals("down")){
          g.drawImage(image, rectX, rectY, w+rectX, h+rectY, 0, 0, w, h, null);
       }
@@ -76,27 +95,21 @@ public class Player{
          
       }
       else if(curWeapon.equals("Sword")){
-         g.drawImage(SwordImage, 250, 630, 300+sww, 670+swh, 0, 0, sww, swh, null);
+         g.drawImage(SwordItemImage, 300, 650, 245+siw, 620+sih, 0, 0, siw, sih, null);
       }
       else if(curWeapon.equals("Spear")){
-         g.drawImage(SpearImage, 250, 630, 300+spw, 670+sph, 0, 0, spw, sph, null);
+         g.drawImage(SpearItemImage, 300, 650, 245+spiw, 620+spih, 0, 0, spiw, spih, null);
       }
       else if(curWeapon.equals("Hammer")){
-         g.drawImage(HammerImage, 250, 630, 300+hw, 670+hh, 0, 0, hw, hh, null);
+         g.drawImage(HammerItemImage, 300, 650, 245+hiw, 620+hih, 0, 0, hiw, hih, null);
       }
       
       g.setFont(new Font("Purisa", Font.BOLD, 15));
-      g.drawString("Current Weapon: " + curWeapon, 300, 668);
+      g.drawString("Current Weapon: " + curWeapon, 280, 668);
       g.drawString("Health: " + health + "/100", 300, 655);
-         
-      
-      
-      
-      
-      
-      
-      
-      
+      g.drawString("Damage Reduction: "  + shield + "%", 280, 642);
+      g.drawString("Money: " + money, 25, 25);    
+      g.drawImage(CoinImage, 95, 7, 120, 32, 0, 0, cw, ch, null);
    }
    public boolean inBetween(int var, int bot, int top){
       if(var >= bot && var <= top){

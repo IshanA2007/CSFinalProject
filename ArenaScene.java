@@ -54,7 +54,7 @@ public class ArenaScene extends JPanel{
       }
       
       bckg.draw(myBuffer);
-      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon());
+      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.money, stats.shield);
       player.move(playerVelocityX, playerVelocityY);
       //add a curWeapon function!!! so much effort :c (for getWEaponDamage) will also help with toolbar
       if(attack){

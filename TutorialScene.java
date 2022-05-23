@@ -48,7 +48,7 @@ public class TutorialScene extends JPanel{
       if(bck.stage >= 2 && dialogue2IsComplete){
          bck.drawObjective(myBuffer, displayText, player.rectX, player.rectY);
       }
-      player.draw(myBuffer, player.style, stats.health, false, stats.curWeapon());
+      player.draw(myBuffer, player.style, stats.health, false, stats.curWeapon(), stats.health);
       player.move(playerVelocityX, playerVelocityY);
       if(bck.speakStage == 0){
          bck.drawMoveSpeech(myBuffer);
