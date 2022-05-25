@@ -4,10 +4,6 @@ import java.awt.event.*;
 import java.awt.image.*;
 
 public class MasterGUI extends JPanel{
-   StartingScene g;
-   TutorialScene tutorial;
-   ArenaScene a;
-   FarmScene f;
    PlayerStats stats = new PlayerStats(0, 0, 100);
    public final boolean owo = true;
    public int doorNum = 0; 
@@ -18,82 +14,112 @@ public class MasterGUI extends JPanel{
    public boolean twoInProgress = false;
    public boolean threeInProgress = false;
    public boolean fourInProgress = false;
-   ShopScene s;
-
+   StartingScene s;
+   ShopScene shop;
+   ArenaScene arena;
+   TutorialScene tutorial;
+   FarmScene farm;
+   
+   JPanel cards; 
+   
    public MasterGUI(){
+      
+      /*final String Shop = "SHOP";
+      final String Start = "START";
+      final String Arena = "ARENA";
+      final String Tutorial = "TUTORIAL";
+      final String Farm = "FARM";
+      ShopScene shop = new ShopScene(stats);
+      StartingScene start = new StartingScene(stats);
+      ArenaScene arena = new ArenaScene(stats);
+      TutorialScene tutorial = new TutorialScene(stats);
+      FarmScene farm = new FarmScene(stats);
+      
+      cards = new JPanel(new CardLayout());*/
       setLayout(new BorderLayout());
-      g = new StartingScene(stats);
-      f = new FarmScene(stats);
-      a = new ArenaScene(stats);
-      s = new ShopScene(stats);
+      arena = new ArenaScene(stats, this);
+      add(arena);
+      /*add(cards);
+      cards.add(shop, "SHOP");
+      cards.add(start, "START");
+      cards.add(arena, "ARENA");
+      cards.add(tutorial, "TUTORIAL");
+      cards.add(farm, "FARM");
+      
+      CardLayout cl = (CardLayout)(cards.getLayout());
+      cl.show(cards, "FARM");
+      
+      addKeyListener(new Key());
+      setFocusable(true);*/
+      
+      //setLayout(new BorderLayout());
+      //s = new ShopScene(stats);
+      //add(s);
+ 
+   }
+   
+   public void change(){
+      stats = s.getStats();
+      removeAll();
+      shop = new ShopScene(stats, this);
+      add(shop);
+      shop.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+   public void changeShopToStart(){
+      removeAll();
+      stats = shop.getStats();
+      s = new StartingScene(stats, this);
       add(s);
+      s.requestFocus();
+      revalidate();
+      repaint();
    }
+   
+   public void changeArenaToStart(){
+      removeAll();
+      stats = arena.getStats();
+      s = new StartingScene(stats, this);
+      add(s);
+      s.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+   public void changeFarmToStart(){
+      removeAll();
+      stats = farm.getStats();
+      s = new StartingScene(stats, this);
+      add(s);
+      s.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+   public void changeTutorialToStart(){
+      removeAll();
+      stats = tutorial.getStats();
+      s = new StartingScene(stats, this);
+      add(s);
+      s.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+
    
    
    
-   public void gameLoop(){
-      while(count == 1){
-      if(gInProgress){
-         if(g.isOver){
-            stats = g.getStats();
-            gInProgress = false;
-            remove(g);
-            //if(g.doorNum == 1){
-            oneInProgress = true;
-               tutorial = new TutorialScene(stats);
-               add(tutorial);
-            //}
-            //else if(g.doorNum == 2){
-               //2InProgress = true;
-               //farm = new FarmScene(stats);
-               //add(farm);
-            //}
-            //else if(g.doorNum == 3){
-               //3InProgress = true;
-               //arena = new ArenaScene(stats);
-               //add(arena);
-            //}
-            /*else if(g.doorNum == 4){
-               4InProgress = true;
-               shop = new ShopScene(stats);
-               add(shop);
-            }
-            */
-            validate();
-         }
-      
-      
-      else if(oneInProgress){
-         if(tutorial.isOver){
-            stats = tutorial.getStats();
-            oneInProgress = false;
-            remove(tutorial);
-            gInProgress = true;
-            g = new StartingScene(stats);
-            add(g);
-            validate();      
-         }
-      }
-      /*
-      
-      else if(2InProgress){
-         if(farm.isOver){
-            stats = farm.getStats();
-            2InProgress = false;
-            remove(farm);
-            gInProgress = true;
-            g = new StartingBackground(stats);
-            add(g);
-            validate();
-         }
-      }
-      */
-         
-         
-   }
-   }
+   
+   
+   
+   
+   
 }
 
+
             
       
    
@@ -106,7 +132,7 @@ public class MasterGUI extends JPanel{
          
       
       
-  }
+  
 
 
    

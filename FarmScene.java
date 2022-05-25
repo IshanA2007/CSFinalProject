@@ -21,10 +21,12 @@ public class FarmScene extends JPanel{
    public boolean increaseVelocityRight = true;
    public boolean increaseVelocityLeft = true;
    private Timer t;
+   MasterGUI f;
    
    
    
-   public FarmScene(PlayerStats pstats){
+   public FarmScene(PlayerStats pstats, MasterGUI master){
+      f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       t = new Timer(5, new AnimationListener());
@@ -78,7 +80,9 @@ public class FarmScene extends JPanel{
       
       repaint();
    }
-   
+   public PlayerStats getStats(){
+      return stats;
+   }
    public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
@@ -118,8 +122,11 @@ public class FarmScene extends JPanel{
          else if(e.getKeyCode() == KeyEvent.VK_R){
             harvestCrops = true;
          }
+         
          else if(e.getKeyCode() == KeyEvent.VK_J){
-            isOver = true;
+            if(playerVelocityX == 0 && playerVelocityY == 0){
+               f.changeFarmToStart();
+            }
          }
       }
       public void keyReleased(KeyEvent e){

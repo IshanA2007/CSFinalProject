@@ -25,8 +25,11 @@ public class ShopScene extends JPanel{
    private Timer t;
    ShopBackground bckg;
    public boolean buyItem = true;   
+   MasterGUI f;
 
-   public ShopScene(PlayerStats pstats){
+   public ShopScene(PlayerStats pstats, MasterGUI master)
+   {
+      f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       t = new Timer(5, new AnimationListener());
@@ -37,6 +40,9 @@ public class ShopScene extends JPanel{
       bckg = new ShopBackground(stats);
       addKeyListener(new Key());
       setFocusable(true);
+      
+      requestFocus();
+      
      
       begin();
    }
@@ -53,6 +59,9 @@ public class ShopScene extends JPanel{
       repaint();
    }
    
+   public PlayerStats getStats(){
+      return stats;
+   }
    public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
@@ -124,6 +133,11 @@ public class ShopScene extends JPanel{
             player.style = "down";
             playerVelocityY += 4;
             increaseVelocityDown = false;
+         }
+         else if(e.getKeyCode() == KeyEvent.VK_J){
+            if(playerVelocityX == 0 && playerVelocityY == 0){
+               f.changeShopToStart();
+            }
          }
       }
       public void keyReleased(KeyEvent e){

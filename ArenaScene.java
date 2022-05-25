@@ -20,11 +20,13 @@ public class ArenaScene extends JPanel{
    public boolean increaseVelocityLeft = true;
    public boolean attack = false;
    public boolean isOver = false;
+   MasterGUI f;
 
    
    
    
-   public ArenaScene(PlayerStats pstats){
+   public ArenaScene(PlayerStats pstats, MasterGUI master){
+      f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       stats = pstats;
@@ -84,6 +86,10 @@ public class ArenaScene extends JPanel{
       }      
       repaint();
    }
+   
+   public PlayerStats getStats(){
+      return stats;
+   }
       
    
    private class AnimationListener implements ActionListener
@@ -119,9 +125,16 @@ public class ArenaScene extends JPanel{
          else if(e.getKeyCode()== KeyEvent.VK_SPACE){
             attack = true;
          }
+         else if(e.getKeyCode() == KeyEvent.VK_J){
+            if(playerVelocityX == 0 && playerVelocityY == 0){
+               f.changeArenaToStart();
+            }
+         }
          
             
       }
+      
+     
       public void keyReleased(KeyEvent e){
          if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             playerVelocityX -= 3;
@@ -142,6 +155,8 @@ public class ArenaScene extends JPanel{
          else if(e.getKeyCode() == KeyEvent.VK_SPACE){
             attack = false;
          }
+         
+         
          
          
          

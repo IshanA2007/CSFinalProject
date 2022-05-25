@@ -22,7 +22,9 @@ public class TutorialScene extends JPanel{
    public boolean displayText = false;
    public boolean isOver = false;
    PlayerStats stats;
-   public TutorialScene(PlayerStats pStats){
+   MasterGUI f;
+   public TutorialScene(PlayerStats pStats, MasterGUI master){
+      f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       player = new Player();
@@ -48,7 +50,7 @@ public class TutorialScene extends JPanel{
       if(bck.stage >= 2 && dialogue2IsComplete){
          bck.drawObjective(myBuffer, displayText, player.rectX, player.rectY);
       }
-      player.draw(myBuffer, player.style, stats.health, false, stats.curWeapon(), stats.health);
+      player.draw(myBuffer, player.style, stats.health, false, stats.curWeapon(), stats.health, stats.shield);
       player.move(playerVelocityX, playerVelocityY);
       if(bck.speakStage == 0){
          bck.drawMoveSpeech(myBuffer);
@@ -60,7 +62,9 @@ public class TutorialScene extends JPanel{
          bck.drawObjectiveSpeech(myBuffer);
       }
       else if(bck.stage == 3){
-         isOver = true;
+         if(playerVelocityX == 0 && playerVelocityY == 0){
+            f.changeTutorialToStart();
+         }
       }
       
       

@@ -140,7 +140,7 @@ public class TutorialBackground{
          g.setFont(new Font("Purisa", Font.BOLD, 15));
          g.drawString("Chestplate", 410, 420);
       }
-
+   
       
    }
    
