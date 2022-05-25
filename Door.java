@@ -29,13 +29,21 @@ public class Door{
 
    
    public void draw(Graphics g){
-      g.drawImage(image, doorX, doorY, w+doorX+20, h+doorY+20, 0, 0, w, h, null);    
+      g.drawImage(image, doorX, doorY, w+doorX, h+doorY, 0, 0, w, h, null);    
    }
    
-   public void open(Player p){
-      if(p.rectY > doorY && p.rectY < (doorY + h) && p.rectX > doorX && p.rectX < (doorX + w)){
+   public int getX(){
+      return doorX;
+   }
+   
+   public int getY(){
+      return doorY;
+   }
+   
+   public boolean nextToADoor(int xCoords, int yCoords){
+      if(Math.abs(xCoords - getX()) < 20 && Math.abs(yCoords - getY()) < 20){
+         return true;
       }
-      else if(p.rectY > doorY && p.rectY < (doorY + h) && p.rectX > doorX && p.rectX < (doorX + w)){
-      }
+      return false;
    }
 }
