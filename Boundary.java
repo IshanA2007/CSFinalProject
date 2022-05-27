@@ -20,16 +20,16 @@ public class Boundary{
    }
    
    public void checkBound(Player p){
-      if(Math.abs(p.rectY - corner1Y) <= 20){
+      if(Math.abs(p.rectY - corner1Y) == 0){
          checkUp = false;
       }
-      if(Math.abs(p.rectY - corner2Y) <= (p.h + 20)){
+      if(Math.abs(p.rectY - corner2Y) == p.h){
          checkDown = false;
       }
-      if(Math.abs(p.rectX - corner1X) <= 20){
+      if(Math.abs(p.rectX - corner1X) == 0){
          checkRight = false;
       }
-      if(Math.abs(p.rectX - corner2X) <= (p.w + 20)){
+      if(Math.abs(p.rectX - corner2X) == p.w){
          checkLeft = false;
       }
    }
