@@ -32,6 +32,12 @@ public class Boundary{
       if(Math.abs(p.rectX - corner2X) == p.w){
          checkLeft = false;
       }
+      else{
+         checkUp = true;
+         checkDown = true;
+         checkRight = true;
+         checkLeft = true;
+      }
    }
 }
       
