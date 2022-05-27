@@ -161,8 +161,8 @@ public class TutorialBackground{
       g.drawImage(HeemImage, 520, 500, 700, 700,w1, 0, 0, h1, null);
       g.setFont(new Font("Purisa", Font.BOLD, 13));
       g.setColor(Color.BLACK);
-      g.drawString("Press 'w' to move forward, 's' to move back", 60, 570);
-      g.drawString("and 'a' and 'd' to move sideways!", 60, 590);
+      g.drawString("Press the arrow keys to move around!", 60, 570);
+      g.drawString("and press 'J' to open doors when you are close to them!", 60, 590);
       g.drawString("Try moving around a bit till you're comfortable, then press E to close!", 60, 610);
    }
    

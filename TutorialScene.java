@@ -23,7 +23,9 @@ public class TutorialScene extends JPanel{
    public boolean isOver = false;
    PlayerStats stats;
    MasterGUI f;
+   Door door;
    public TutorialScene(PlayerStats pStats, MasterGUI master){
+      door = new Door(340, 100);
       f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
@@ -36,7 +38,15 @@ public class TutorialScene extends JPanel{
       
       begin();
    }
+   public void checkDoorText(int playerX, int playerY){
+         if(door.nextToADoor(playerX, playerY, 0)){
+            myBuffer.setFont(new Font("Purisa", Font.BOLD, 15));
+            myBuffer.setColor(Color.WHITE);
+            myBuffer.drawString("Press 'J' to exit!", door.getX()-5, door.getY()-5);
+         }
+      }
    
+
    public void begin(){
       t.start();
    }
@@ -62,10 +72,12 @@ public class TutorialScene extends JPanel{
          bck.drawObjectiveSpeech(myBuffer);
       }
       else if(bck.stage == 3){
-         if(playerVelocityX == 0 && playerVelocityY == 0){
-            f.changeTutorialToStart();
-         }
+         
       }
+      
+      
+      door.draw(myBuffer, 0);
+      checkDoorText(player.rectX, player.rectY);
       
       
       
@@ -94,6 +106,9 @@ public class TutorialScene extends JPanel{
             player.style = "right";
             playerVelocityX += 3;
             increaseVelocityRight = false;
+         }
+         else if(e.getKeyCode() == KeyEvent.VK_L){
+            stats.saveStats();
          }
          else if(e.getKeyCode() == KeyEvent.VK_LEFT && increaseVelocityLeft){
             player.style = "left";
@@ -125,6 +140,15 @@ public class TutorialScene extends JPanel{
                dialogue2IsComplete = true;
             }
          }
+         
+         else if(e.getKeyCode() == KeyEvent.VK_J && bck.stage >= 3){
+            if(playerVelocityX == 0 && playerVelocityY == 0){
+               if(door.nextToADoor(player.rectX, player.rectY, 0)){
+                  f.changeTutorialToStart();
+               }
+            }
+         }
+         
             
       }
       public void keyReleased(KeyEvent e){

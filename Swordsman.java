@@ -24,8 +24,8 @@ public class Swordsman extends Enemy{
       catch (IOException e){
          System.exit(1);
       }
-      swX = 150;
-      swY = 150;
+      swX = archX;
+      swY = archY;
       dmg = stage;
       health = 5*stage;
    }

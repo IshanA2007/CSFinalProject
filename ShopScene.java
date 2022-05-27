@@ -26,9 +26,11 @@ public class ShopScene extends JPanel{
    ShopBackground bckg;
    public boolean buyItem = true;   
    MasterGUI f;
+   Door door;
 
    public ShopScene(PlayerStats pstats, MasterGUI master)
    {
+      door = new Door(340, 100);
       f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
@@ -50,12 +52,22 @@ public class ShopScene extends JPanel{
    public void begin(){
       t.start();
    }
+   public void checkDoorText(int playerX, int playerY){
+      if(door.nextToADoor(playerX, playerY, 0)){
+            myBuffer.setFont(new Font("Purisa", Font.BOLD, 15));
+            myBuffer.setColor(Color.WHITE);
+            myBuffer.drawString("Press 'J' to exit!", door.getX()-5, door.getY()-5);
+         }
+      }
    
+
    public void animate(){
       
       bckg.draw(myBuffer, player.rectX, player.rectY);
       player.draw(myBuffer, player.style, 100, true, stats.curWeapon(), stats.money, stats.shield);
       player.move(playerVelocityX, playerVelocityY);
+      door.draw(myBuffer, 0);
+      checkDoorText(player.rectX, player.rectY);
       repaint();
    }
    
@@ -129,6 +141,9 @@ public class ShopScene extends JPanel{
             playerVelocityY -= 4;
             increaseVelocityUp = false;
          }
+         else if(e.getKeyCode() == KeyEvent.VK_L){
+            stats.saveStats();
+         }
          else if(e.getKeyCode() == KeyEvent.VK_DOWN && increaseVelocityDown){
             player.style = "down";
             playerVelocityY += 4;
@@ -136,7 +151,9 @@ public class ShopScene extends JPanel{
          }
          else if(e.getKeyCode() == KeyEvent.VK_J){
             if(playerVelocityX == 0 && playerVelocityY == 0){
-               f.changeShopToStart();
+               if(door.nextToADoor(player.rectX, player.rectY, 0)){
+                  f.changeShopToStart();
+               }
             }
          }
       }

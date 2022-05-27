@@ -28,8 +28,9 @@ public class Door{
    }
 
    
-   public void draw(Graphics g){
-      g.drawImage(image, doorX, doorY, w+doorX, h+doorY, 0, 0, w, h, null);    
+   public void draw(Graphics g, int referenceX){
+      g.drawImage(image, doorX-referenceX, doorY, w+doorX-referenceX, h+doorY, 0, 0, w, h, null);
+          
    }
    
    public int getX(){
@@ -40,8 +41,8 @@ public class Door{
       return doorY;
    }
    
-   public boolean nextToADoor(int xCoords, int yCoords){
-      if(Math.abs(xCoords - getX()) < 20 && Math.abs(yCoords - getY()) < 20){
+   public boolean nextToADoor(int xCoords, int yCoords, int referenceX){
+      if(Math.abs(xCoords - (getX()-referenceX)) < 40 && Math.abs(yCoords - getY()) < 40){
          return true;
       }
       return false;

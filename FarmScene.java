@@ -50,10 +50,10 @@ public class FarmScene extends JPanel{
    public void generateVeggies(){
       count += 1;
       if(count%150 == 0){
-         veggies.add(new Potato());
+         veggies.add(new Carrot());
       }
       if(count%300==0){
-         veggies.add(new Carrot());
+         veggies.add(new Potato());
       }
       
    }
@@ -66,10 +66,27 @@ public class FarmScene extends JPanel{
       }
          
    }
-   
+   public int getNumCarrots(){
+      int count = 0;
+      for(int i = 0; i < veggies.size(); i++){
+         if(veggies.get(i).getVal() == 2){
+            count++;
+         }
+      }
+      return count;
+   }
+   public int getNumPotatoes(){
+      int count = 0;
+      for(int i = 0; i < veggies.size(); i++){
+         if(veggies.get(i).getVal() == 5){
+            count++;
+         }
+      }
+      return count;
+   }
    
    public void animate(){
-      bckg.draw(myBuffer, player.rectX, player.rectY);
+      bckg.draw(myBuffer, player.rectX, player.rectY, getNumCarrots(), getNumPotatoes());
       bckg.moveBackground((int)(1.5*playerVelocityX));
       generateVeggies();
       if(harvestCrops){
@@ -123,7 +140,7 @@ public class FarmScene extends JPanel{
             harvestCrops = true;
          }
          
-         else if(e.getKeyCode() == KeyEvent.VK_J){
+         else if(e.getKeyCode() == KeyEvent.VK_E){
             if(playerVelocityX == 0 && playerVelocityY == 0){
                f.changeFarmToStart();
             }

@@ -1,5 +1,9 @@
    import java.util.ArrayList;
-
+   import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.FileWriter;
+import java.io.IOException;
 public class PlayerStats{
    public int damage;
    public int shield;
@@ -31,6 +35,60 @@ public class PlayerStats{
    public void addShield(int incShield){
       shield += incShield;
    }
+   
+   public void loadStats(){
+      int count = 0;
+      try {
+      File myObj = new File("stats.txt");
+      Scanner myReader = new Scanner(myObj);
+      while (myReader.hasNextLine()) {
+        String data = myReader.nextLine();
+        if(count == 0){
+         shield = Integer.parseInt(data);
+        }
+        else if(count == 1){
+         damage = Integer.parseInt(data);
+        }
+        else if(count == 2){
+         money = Integer.parseInt(data);
+        }
+        else if(count == 3){
+         combStage = Integer.parseInt(data);
+        }
+        else if(count >= 4){
+         weapons.add(data);
+        }
+        count += 1;
+      }
+      myReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+   }
+   
+   public void saveStats(){
+      try {
+      FileWriter myWriter = new FileWriter("stats.txt");
+      myWriter.write(Integer.toString(shield));
+      myWriter.write(System.getProperty( "line.separator" ));
+      myWriter.write(Integer.toString(damage));
+      myWriter.write(System.getProperty( "line.separator" ));
+      myWriter.write(Integer.toString(money));
+      myWriter.write(System.getProperty( "line.separator" ));
+      myWriter.write(Integer.toString(combStage));
+      myWriter.write(System.getProperty( "line.separator" ));
+      for(int i = 0; i < weapons.size(); i++){
+         myWriter.write(weapons.get(i));
+         myWriter.write(System.getProperty( "line.separator" ));
+      }
+      myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+ }
    
    public void setShield(int newShield){
       shield = newShield;
@@ -68,7 +126,7 @@ public class PlayerStats{
          a = "Hammer";
       }
       else{
-         a = "Fists";
+         a = "Fist";
       }   
       
       return a;

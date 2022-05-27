@@ -32,9 +32,12 @@ public class ArenaScene extends JPanel{
       stats = pstats;
       player = new Player();
       stage = pstats.combStage;
-      bckg = new ArenaBackground(stage);
+      bckg = new ArenaBackground(stage, this);
       player.style = "still";
       t = new Timer(5, new AnimationListener());
+      //debug
+      
+
       addKeyListener(new Key());
       setFocusable(true);
       
@@ -45,16 +48,16 @@ public class ArenaScene extends JPanel{
       t.start();
    }
    
+   
+
+
     public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
    }
    
    public void animate(){
-      if(bckg.levelCleared()){
-         isOver = true;
-      }
-      
+      //debug  
       bckg.draw(myBuffer);
       player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.money, stats.shield);
       player.move(playerVelocityX, playerVelocityY);
@@ -74,7 +77,11 @@ public class ArenaScene extends JPanel{
       else if(bckg.levelCleared()){
          myBuffer.setColor(Color.BLACK);
          myBuffer.fillRect(0, 0, 700, 700);
-         isOver = true;
+         myBuffer.setColor(Color.WHITE);
+         myBuffer.setFont(new Font("Purisa", Font.BOLD, 30));
+         myBuffer.drawString("Level Cleared!", 250, 250);
+         myBuffer.setFont(new Font("Purisa", Font.BOLD, 15));
+         myBuffer.drawString("Press 'E' to exit", 250, 500);
       }
       else{
          if(stats.health < 100){
@@ -122,11 +129,15 @@ public class ArenaScene extends JPanel{
             playerVelocityY += 4;
             increaseVelocityDown = false;
          }
+         else if(e.getKeyCode() == KeyEvent.VK_L){
+            stats.saveStats();
+         }
          else if(e.getKeyCode()== KeyEvent.VK_SPACE){
             attack = true;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_J){
-            if(playerVelocityX == 0 && playerVelocityY == 0){
+         else if(e.getKeyCode() == KeyEvent.VK_E){
+            if(playerVelocityX == 0 && playerVelocityY == 0 && bckg.levelCleared()){
+               stats.combStage += 1;
                f.changeArenaToStart();
             }
          }

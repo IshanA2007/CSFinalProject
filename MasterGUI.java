@@ -19,6 +19,7 @@ public class MasterGUI extends JPanel{
    ArenaScene arena;
    TutorialScene tutorial;
    FarmScene farm;
+   LoadingScreen loading;
    
    JPanel cards; 
    
@@ -37,8 +38,8 @@ public class MasterGUI extends JPanel{
       
       cards = new JPanel(new CardLayout());*/
       setLayout(new BorderLayout());
-      arena = new ArenaScene(stats, this);
-      add(arena);
+      loading = new LoadingScreen(stats, this);
+      add(loading);
       /*add(cards);
       cards.add(shop, "SHOP");
       cards.add(start, "START");
@@ -58,12 +59,42 @@ public class MasterGUI extends JPanel{
  
    }
    
-   public void change(){
+   public void changeStartToShop(){
       stats = s.getStats();
       removeAll();
       shop = new ShopScene(stats, this);
       add(shop);
       shop.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+   public void changeStartToTutorial(){
+      stats = s.getStats();
+      removeAll();
+      tutorial = new TutorialScene(stats, this);
+      add(tutorial);
+      tutorial.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+   public void changeStartToArena(){
+      stats = s.getStats();
+      removeAll();
+      arena = new ArenaScene(stats, this);
+      add(arena);
+      arena.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+   public void changeStartToFarm(){
+      stats = s.getStats();
+      removeAll();
+      farm = new FarmScene(stats, this);
+      add(farm);
+      farm.requestFocus();
       revalidate();
       repaint();
    }
@@ -101,6 +132,16 @@ public class MasterGUI extends JPanel{
    public void changeTutorialToStart(){
       removeAll();
       stats = tutorial.getStats();
+      s = new StartingScene(stats, this);
+      add(s);
+      s.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
+   public void changeLoadToStart(){
+      removeAll();
+      stats = loading.getStats();
       s = new StartingScene(stats, this);
       add(s);
       s.requestFocus();

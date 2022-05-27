@@ -10,9 +10,11 @@ import java.util.*;
 public class ArenaBackground{
    public int stage;
    ArrayList<Enemy> enemies;
+   ArenaScene scene;
    
    
-   public ArenaBackground(int combStage){
+   public ArenaBackground(int combStage, ArenaScene ascene){
+      scene = ascene;
       stage = combStage;
       enemies = new ArrayList<Enemy>();
       enemies.add(new Archer(stage));
@@ -22,7 +24,7 @@ public class ArenaBackground{
    
    public void makeSwordsmen(){
       for(int i = 0; i < stage; i++){
-         enemies.add(new Swordsman(enemies.get(i).getX(), enemies.get(i).getY(), stage));
+         enemies.add(new Swordsman(enemies.get(0).getX()-100, enemies.get(0).getY()-100, stage));
       }
    }
    
@@ -96,6 +98,7 @@ public class ArenaBackground{
                   return true;
                }
                enemies.remove(enemies.get(i));
+               scene.stats.money += 25;
             }
          }
          return false;
