@@ -26,7 +26,7 @@ public class BossBackground{
       catch (IOException e){
          System.exit(1);
       }
-//       referenceX = newRefX;
+      referenceX = newRefX;
     }
    
    
@@ -36,17 +36,17 @@ public class BossBackground{
       g.drawImage(bckImg, 0, 0, w1, h1, null);
    }
    
-//    public void moveBackground(int change){
-//       if(referenceX <= 0){
-//             referenceX += 5;
-//          }
-//       else if(referenceX <= 518){
-//          referenceX += change;
-//       }
-//       else if(referenceX > 518){
-//          referenceX -= 5;
-//       }    
-//    }
+   public void moveBackground(int change){
+      if(referenceX <= 0){
+            referenceX += 5;
+         }
+      else if(referenceX <= 518){
+         referenceX += change;
+      }
+      else if(referenceX > 518){
+         referenceX -= 5;
+      }    
+   }
       
 }
    
