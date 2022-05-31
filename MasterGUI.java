@@ -20,6 +20,9 @@ public class MasterGUI extends JPanel{
    TutorialScene tutorial;
    FarmScene farm;
    LoadingScreen loading;
+   BossScene boss1;
+   Boss2Scene boss2;
+   Boss3Scene boss3;
    
    JPanel cards; 
    
@@ -38,8 +41,8 @@ public class MasterGUI extends JPanel{
       
       cards = new JPanel(new CardLayout());*/
       setLayout(new BorderLayout());
-      loading = new LoadingScreen(stats, this);
-      add(loading);
+      boss3 = new Boss3Scene(stats, this);
+      add(boss3);
       /*add(cards);
       cards.add(shop, "SHOP");
       cards.add(start, "START");
@@ -148,6 +151,17 @@ public class MasterGUI extends JPanel{
       revalidate();
       repaint();
    }
+   
+   public void changeBoss1Boss2(){
+      removeAll();
+      stats = boss1.getStats();
+      boss2 = new Boss2Scene(stats, this);
+      add(boss2);
+      boss2.requestFocus();
+      revalidate();
+      repaint();
+   }
+   
    
 
    

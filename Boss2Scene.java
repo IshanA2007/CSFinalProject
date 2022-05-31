@@ -2,15 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
-import java.util.ArrayList;
 
-public class StartingScene extends JPanel{
+public class Boss2Scene extends JPanel{
 
    BufferedImage myImage;
    Graphics myBuffer;
    private Timer t;
-   public boolean showInfoBook = false;
-   StartingBackground bckground;
+   Boss2Background bckground;
    private boolean space;
    public int count = 0;
    public int playerVelocityX = 0;
@@ -24,24 +22,19 @@ public class StartingScene extends JPanel{
    public int doorNum = 0;
    public boolean isOver = false;
    MasterGUI f;
-   ArrayList<Door> doors;
-   public StartingScene(PlayerStats pStats, MasterGUI master){
-      doors = new ArrayList<Door>();
-      doors.add(new Door(147, 145));
-      doors.add(new Door(800, 145));
-      doors.add(new Door(1050, 300));
-      doors.add(new Door(600, 15));
+   public boolean attack = false;
+   public Boss2Scene(PlayerStats pStats, MasterGUI master){
       f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       myBuffer.setColor(Color.WHITE);   
       myBuffer.fillRect(0, 0, 700, 700);
-      bckground = new StartingBackground(0);
+      bckground = new Boss2Background();
       player = new Player();
       player.style = "still";
       stats = pStats;
       t = new Timer(5, new AnimationListener());
-      
+      stats.setDamage(stats.getWeaponDamage(stats.curWeapon())/2);
       addKeyListener(new Key());
       setFocusable(true);
       
@@ -52,45 +45,43 @@ public class StartingScene extends JPanel{
       t.start();
    }
    
-   public PlayerStats getStats(){
-      return stats;
-   }
-   
    
    public void animate(){
+      
       bckground.draw(myBuffer);
-      bckground.moveBackground((int)(1.5*playerVelocityX));
-      player.draw(myBuffer, player.style, 100, true, stats.curWeapon(), stats.money, stats.shield);
+      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.health, stats.shield);
       player.move(playerVelocityX, playerVelocityY);
-      for(int i = 0; i < doors.size(); i++){
-         doors.get(i).draw(myBuffer, bckground.referenceX);
+      if(count <= 500){
+         bckground.drawWelcome(myBuffer);
+         count += 1;
       }
-      checkDoorText(player.rectX, player.rectY);
-      stats.setDamage(stats.getWeaponDamage(stats.curWeapon()));
-      if(showInfoBook){
-         stats.drawInfoBook(myBuffer);
-      }
-      repaint();
-   }
-   
-  public void checkDoorText(int playerX, int playerY){
-      for(int i = 0; i < doors.size(); i++){
-         if(doors.get(i).nextToADoor(playerX, playerY, bckground.referenceX)){
-            myBuffer.setFont(new Font("Purisa", Font.BOLD, 15));
-            myBuffer.setColor(Color.WHITE);
-            myBuffer.drawString("Press 'E' to enter!", doors.get(i).getX()-5-bckground.referenceX, doors.get(i).getY()-5);
+      else if(bckground.getEckHealth() >= 500){
+         //true is the charge (for first part)
+         bckground.drawEck(myBuffer);
+         //moveEck also does dmg when close enuf
+         bckground.moveEck(player.rectX, player.rectY, true, this);
+         if(attack){
+            bckground.getAttacked(player.rectX, player.rectY, stats.getWeaponDamage(stats.curWeapon()));
          }
+         
       }
+      
+      //else{
+         //f.changeBoss2Boss3();
+      //}  
+      count+= 1;
+      repaint();  
+      
    }
-          
-            
    
    public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
    }
    
-   
+   public PlayerStats getStats(){
+      return stats;
+   }
    
    private class AnimationListener implements ActionListener
    {
@@ -112,6 +103,7 @@ public class StartingScene extends JPanel{
             playerVelocityX -= 3;
             increaseVelocityLeft = false;
          }
+         
          else if(e.getKeyCode() == KeyEvent.VK_UP && increaseVelocityUp){
             player.style = "up";
             playerVelocityY -= 4;
@@ -122,40 +114,9 @@ public class StartingScene extends JPanel{
             playerVelocityY += 4;
             increaseVelocityDown = false;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_L){
-            stats.saveStats();
+         else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            attack = true;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_I){
-            showInfoBook = true;
-         }
-         else if(e.getKeyCode() == KeyEvent.VK_E){
-            
-            if(playerVelocityX == 0 && playerVelocityY == 0){
-               for(int i = 0; i < doors.size(); i++){
-                  if(doors.get(i).nextToADoor(player.rectX, player.rectY, bckground.referenceX)){
-                     if(i == 0){
-                        f.changeStartToTutorial();
-                     }
-                     else if(i == 1){
-                        f.changeStartToArena();
-                     }
-                     else if(i == 2){
-                        f.changeStartToShop();
-                     }
-                     else if(i == 3){
-                        f.changeStartToFarm();
-                     }
-                     //else if(i == 4){
-                        //f.changeStartToBoss();
-                     //}
-                     
-                  }
-               }
-            }
-         }
-               
-            
-            
       }
       
       public void keyReleased(KeyEvent e){
@@ -167,9 +128,6 @@ public class StartingScene extends JPanel{
             playerVelocityX += 3;
             increaseVelocityLeft = true;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_I){
-            showInfoBook = false;
-         }
          else if(e.getKeyCode() == KeyEvent.VK_UP){
             playerVelocityY += 4;
             increaseVelocityUp = true;
@@ -177,6 +135,9 @@ public class StartingScene extends JPanel{
          else if(e.getKeyCode() == KeyEvent.VK_DOWN){
             playerVelocityY -= 4;
             increaseVelocityDown = true;
+         }
+         else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            attack = false;
          }
       }
    }

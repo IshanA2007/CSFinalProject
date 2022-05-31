@@ -4,6 +4,15 @@ import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.*;
+import javax.imageio.*;
+import java.io.File;
+import java.awt.event.*;
+import java.io.IOException;
+import javax.swing.*;
+
 public class PlayerStats{
    public int damage;
    public int shield;
@@ -12,9 +21,19 @@ public class PlayerStats{
    public int combStage;
    public int money;
    public int count = 0;
-   
+   BufferedImage BookImage;
+   public int bw, bh;
    
    public PlayerStats(int newDmg, int newShld, int newHlth){
+      try{
+         File bookImg = new File("book.png");
+         BookImage = ImageIO.read(bookImg);
+         bw = BookImage.getWidth(null);
+         bh = BookImage.getHeight(null);
+      }
+      catch(IOException e){
+         System.exit(1);
+      }
       damage = newDmg;
       shield = newShld;
       health = newHlth;
@@ -34,6 +53,36 @@ public class PlayerStats{
    
    public void addShield(int incShield){
       shield += incShield;
+   }
+   
+   
+   public void drawInfoBook(Graphics g){
+      g.drawImage(BookImage, 15, 100, 15+bw, 50+bh+250, 0, 0, bw, bh, null);
+      g.drawString("Keybinds", 175, 200);
+      g.drawString("WASD  -  Move around", 85, 230);
+      g.drawString("Space  -  Attack enemies in arena", 85, 260);
+      g.drawString("I  -  Open/Close info book", 85, 290);
+      g.drawString("E  -  Enter/Exit a room", 85, 320);
+      g.drawString("J  -  Exit tutorial room", 85, 350);
+      g.drawString("K  -  Save game stats", 85, 380);
+      g.drawString("B  -  Buy items in shop", 85, 410);
+      g.drawString("Destinations", 400, 200);
+      g.drawString("Main Map: ", 350, 220);
+      g.drawString("Go to different destinations", 370, 250);
+      g.drawString("through doors", 370, 260);
+      g.drawString("Tutorial: ", 350, 290);
+      g.drawString("Learn the basics of the game", 370, 320);
+      g.drawString("Farm: ", 350, 340);
+      g.drawString("Earn money while harvesting", 370, 370);
+      g.drawString("crops", 370, 380);
+      g.drawString("Arena: ", 350, 410);
+      g.drawString("Battle strong mobs for", 370, 440); 
+      g.drawString("lots of money", 370, 450);
+      g.drawString("Shop: ", 350, 480);
+      g.drawString("Buy powerful weapons", 370, 510); 
+      g.drawString("and armor", 370, 520);
+      g.drawString("Boss Room: ", 350, 550);
+      g.drawString("Fight The Eck", 370, 580);
    }
    
    public void loadStats(){
@@ -149,8 +198,11 @@ public class PlayerStats{
       else if(weapon.equals("Sword")){
          return 5;
       }
-      else if(weapon.equals("Spoon")){
+      else if(weapon.equals("Spear")){
          return 50;
+      }
+      else if(weapon.equals("Hammer")){
+         return 200;
       }
       return 0;
    }

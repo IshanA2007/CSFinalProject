@@ -11,6 +11,7 @@ public class BossScene extends JPanel{
    BossBackground bckground;
    private boolean space;
    public int count = 0;
+   public boolean fightPress = true;
    public int playerVelocityX = 0;
    public int playerVelocityY = 0;
    Player player;
@@ -21,7 +22,10 @@ public class BossScene extends JPanel{
    public boolean increaseVelocityLeft = true;
    public int doorNum = 0;
    public boolean isOver = false;
-   public BossScene(PlayerStats pStats){
+   MasterGUI f;
+   public boolean fight = false;
+   public BossScene(PlayerStats pStats, MasterGUI master){
+      f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       myBuffer.setColor(Color.WHITE);   
@@ -31,7 +35,7 @@ public class BossScene extends JPanel{
       player.style = "still";
       stats = pStats;
       t = new Timer(5, new AnimationListener());
-      
+      stats.setDamage(stats.getWeaponDamage(stats.curWeapon()));
       addKeyListener(new Key());
       setFocusable(true);
       
@@ -42,14 +46,28 @@ public class BossScene extends JPanel{
       t.start();
    }
    
+   public PlayerStats getStats(){
+      return stats;
+   }
    
    public void animate(){
       bckground.draw(myBuffer);
-      bckground.moveBackground((int)(1.5*playerVelocityX));
+      if(count <= 500){
+         bckground.drawWelcome(myBuffer);
+      }
+      else if(count <= 1000){
+         bckground.drawNoEscape(myBuffer);
+      }
+      else if(count <= 1500){
+         bckground.drawFightMe(myBuffer);
+      }
+      else if(count > 2000){
+         myBuffer.setColor(Color.BLACK);
+         myBuffer.setFont(new Font("Purisa", Font.BOLD, 35));
+         myBuffer.drawString("Press 'E' to fight!", 250, 350);
+      }      
       
-      player.draw(myBuffer, player.style, 100, true, stats.curWeapon(), stats.money, stats.shield);
-      player.move(playerVelocityX, playerVelocityY);
-      stats.setDamage(stats.getWeaponDamage(stats.curWeapon()));
+      count+= 1;
       
       repaint();
    }
@@ -57,10 +75,6 @@ public class BossScene extends JPanel{
    public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
-   }
-   
-   public PlayerStats getStats(){
-      return stats;
    }
    
    private class AnimationListener implements ActionListener
@@ -83,6 +97,10 @@ public class BossScene extends JPanel{
             playerVelocityX -= 3;
             increaseVelocityLeft = false;
          }
+         else if(count > 2000 && e.getKeyCode() == KeyEvent.VK_E){
+            f.changeBoss1Boss2();
+         }
+         
          else if(e.getKeyCode() == KeyEvent.VK_UP && increaseVelocityUp){
             player.style = "up";
             playerVelocityY -= 4;
@@ -93,9 +111,7 @@ public class BossScene extends JPanel{
             playerVelocityY += 4;
             increaseVelocityDown = false;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_J){
-            isOver = true;
-         }
+         
       }
       
       public void keyReleased(KeyEvent e){

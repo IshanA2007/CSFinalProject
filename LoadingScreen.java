@@ -86,7 +86,7 @@ public LoadingScreen(PlayerStats pstats, MasterGUI master){
    myBuffer.drawImage(TitleImage, 0, 0, 900, 700, 0, 0, w, h, null);
    startGame.setBounds(275, 500, 150, 50);
    saveGame.setBounds(275, 555, 150, 50);
-   exit.setBounds(275, 615, 150, 50);
+   exit.setBounds(275, 610, 150, 50);
    nameField.setBounds(200, 300, 300, 75);
    startGame.addActionListener(new StartListener());
    exit.addActionListener(new ExitListener());
@@ -110,7 +110,8 @@ public LoadingScreen(PlayerStats pstats, MasterGUI master){
       myBuffer.drawString("Made by: Ishan A. and Ryeen A.", 225, 200);
       myBuffer.setFont(new Font("Purisa", Font.BOLD, 11));
       myBuffer.drawString("Characters based off of: Kolos Bundics", 235, 350);
-      myBuffer.drawString("Alex Boicu, Anna Chau, and Mr. Eckel", 240, 360);
+      myBuffer.drawString("Alex Boicu, and Anna Chau", 240, 360);
+      myBuffer.drawString("Starring: Dr. Ebrahim and Mr. Eckel", 235, 370);
       add(startGame);
       add(saveGame);
       add(exit);
@@ -162,7 +163,7 @@ public LoadingScreen(PlayerStats pstats, MasterGUI master){
    private class LoadListener implements ActionListener{
       public void actionPerformed(ActionEvent e){
          stats.loadStats();
-         System.out.println("Game saved to stats.txt");
+         System.out.println("Stats loaded from stats.txt");
       }
    }
 }

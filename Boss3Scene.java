@@ -1,43 +1,42 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.*;
+import javax.imageio.*;
+import java.io.File;
+import java.awt.event.*;
+import java.io.IOException;
 
-public class ArenaScene extends JPanel{
-   PlayerStats stats;
-   ArenaBackground bckg; 
+public class Boss3Scene extends JPanel{
    BufferedImage myImage;
    Graphics myBuffer;
+   private Timer t;
+   Boss3Background bckground;
+   private boolean space;
+   public int count = 0;
+   public int playerVelocityX = 0;
+   public int playerVelocityY = 0;
    Player player;
-   Timer t;
-   public int stage;
-   public int playerVelocityX;
-   public int playerVelocityY;
+   PlayerStats stats;
    public boolean increaseVelocityUp = true;
    public boolean increaseVelocityDown = true;
    public boolean increaseVelocityRight = true;
-   public int count = 0;
    public boolean increaseVelocityLeft = true;
-   public boolean attack = false;
+   public int doorNum = 0;
    public boolean isOver = false;
    MasterGUI f;
-
-   
-   
-   
-   public ArenaScene(PlayerStats pstats, MasterGUI master){
+   public boolean attack = false;
+   public Boss3Scene(PlayerStats pStats, MasterGUI master){
       f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
-      stats = pstats;
+      myBuffer.setColor(Color.WHITE);   
+      myBuffer.fillRect(0, 0, 700, 700);
+      bckground = new Boss3Background();
       player = new Player();
-      stage = pstats.combStage;
-      bckg = new ArenaBackground(stage, this);
       player.style = "still";
+      stats = pStats;
       t = new Timer(5, new AnimationListener());
-      //debug
-      
-
+      stats.setDamage(stats.getWeaponDamage(stats.curWeapon())/2);
       addKeyListener(new Key());
       setFocusable(true);
       
@@ -48,56 +47,36 @@ public class ArenaScene extends JPanel{
       t.start();
    }
    
-   
-
-
-    public void paintComponent(Graphics g)  //The same method as before!
+   public void paintComponent(Graphics g)  //The same method as before!
    {
       g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
    }
    
    public void animate(){
-      //debug  
-      bckg.draw(myBuffer);
-      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.money, stats.shield);
-      player.move(playerVelocityX, playerVelocityY);
-      //add a curWeapon function!!! so much effort :c (for getWEaponDamage) will also help with toolbar
-      if(attack){
-         bckg.getAttacked(player.rectX, player.rectY, attack, stats.getWeaponDamage(stats.curWeapon()));
-      }
-      bckg.archerAttack(player.rectX, player.rectY, myBuffer);
-      stats.health -= bckg.swordsmenAttack(player.rectX, player.rectY);
-      stats.health -= bckg.archerAttackDamage(player.rectX, player.rectY);
-      
+      bckground.draw(myBuffer);
       if(stats.health <= 0){
-         myBuffer.setColor(Color.BLACK);
          myBuffer.fillRect(0, 0, 700, 700);
-         
       }
-      else if(bckg.levelCleared()){
-         myBuffer.setColor(Color.BLACK);
-         myBuffer.fillRect(0, 0, 700, 700);
-         myBuffer.setColor(Color.WHITE);
-         myBuffer.setFont(new Font("Purisa", Font.BOLD, 30));
-         myBuffer.drawString("Level Cleared!", 250, 250);
-         myBuffer.setFont(new Font("Purisa", Font.BOLD, 15));
-         myBuffer.drawString("Press 'E' to exit", 250, 500);
+      else if(count <= 500){
+         bckground.drawWelcome(myBuffer);
       }
-      else{
-         if(stats.health < 100){
-            count+= 1;
-            if(count%5 == 0){
-               stats.health += 1;
-            }
+      else if(bckground.getEckHealth() > 250){
+         bckground.drawEck(myBuffer);
+         bckground.eckAttack(player.rectX, player.rectY, this);
+         if(attack){
+         bckground.getAttacked(player.rectX, player.rectY, stats.getWeaponDamage(stats.curWeapon()));
          }
-      }      
+      }
+      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.health, stats.shield);
+      player.move(playerVelocityX, playerVelocityY);
+      if(stats.health > 0 && stats.health < 100){
+         if(count % 10 == 0){
+         stats.health += 1;
+         }
+      }
+      count+= 1;
       repaint();
    }
-   
-   public PlayerStats getStats(){
-      return stats;
-   }
-      
    
    private class AnimationListener implements ActionListener
    {
@@ -106,7 +85,7 @@ public class ArenaScene extends JPanel{
          animate();  //...hence animation!
       }
    }
-   
+      
    private class Key extends KeyAdapter{
       public void keyPressed(KeyEvent e){
          if(e.getKeyCode() == KeyEvent.VK_RIGHT && increaseVelocityRight){
@@ -119,6 +98,7 @@ public class ArenaScene extends JPanel{
             playerVelocityX -= 3;
             increaseVelocityLeft = false;
          }
+         
          else if(e.getKeyCode() == KeyEvent.VK_UP && increaseVelocityUp){
             player.style = "up";
             playerVelocityY -= 4;
@@ -129,23 +109,11 @@ public class ArenaScene extends JPanel{
             playerVelocityY += 4;
             increaseVelocityDown = false;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_L){
-            stats.saveStats();
-         }
-         else if(e.getKeyCode()== KeyEvent.VK_SPACE){
+         else if(e.getKeyCode() == KeyEvent.VK_SPACE){
             attack = true;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_E){
-            if(playerVelocityX == 0 && playerVelocityY == 0 && bckg.levelCleared()){
-               stats.combStage += 1;
-               f.changeArenaToStart();
-            }
-         }
-         
-            
       }
       
-     
       public void keyReleased(KeyEvent e){
          if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             playerVelocityX -= 3;
@@ -166,16 +134,9 @@ public class ArenaScene extends JPanel{
          else if(e.getKeyCode() == KeyEvent.VK_SPACE){
             attack = false;
          }
-         
-         
-         
-         
-         
       }
    }
 }
-      
-   
-   
-      
+
+
       
