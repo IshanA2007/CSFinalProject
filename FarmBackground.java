@@ -68,7 +68,7 @@ public class FarmBackground{
          g.drawImage(FarmerImage, 550, 500, 730, 700,0 , 0, fw, fh, null);
          g.setFont(new Font("Purisa", Font.BOLD, 13));
          g.setColor(Color.BLACK);
-         g.drawString("Go visit your farm and press 'R' to harvest and 'J' to leave!", 60, 630);
+         g.drawString("Go visit your farm and press 'R' to harvest and 'E' to leave!", 60, 630);
          g.drawString("Your crops will automatically generate as time goes on!", 60, 610);
          g.drawString("They call me Alex the Cow Farmer because I know many cows", 60, 590);
          g.drawString("Hello I am a farmer, I know all about farming", 60, 570);

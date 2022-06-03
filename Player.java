@@ -109,7 +109,7 @@ public class Player{
       g.drawString("Health: " + health + "/100", 300, 655);
       g.drawString("Damage Reduction: "  + shield + "%", 280, 642);
       g.drawString("Money: " + money, 25, 25);    
-      g.drawImage(CoinImage, 95, 7, 120, 32, 0, 0, cw, ch, null);
+      g.drawImage(CoinImage, 105, 7, 130  , 32, 0, 0, cw, ch, null);
    }
    public boolean inBetween(int var, int bot, int top){
       if(var >= bot && var <= top){

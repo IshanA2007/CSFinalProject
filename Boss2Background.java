@@ -95,13 +95,13 @@ public class Boss2Background{
             
          eck.move(moveX, moveY);
       }
-      if(Math.abs(eck.getX() - playerX) <= 10 && Math.abs(eck.getY() - playerY) <= 10){
-         urmom.stats.health -= eck.getDmg();
+      if(Math.abs(eck.getX() - playerX) <= 15 && Math.abs(eck.getY() - playerY) <= 15){
+         urmom.stats.health -= (int)(2*(1-(urmom.stats.shield/100)));
       }
    }
    
-   public void getAttacked(int playerX, int playerY, int playerDmg){
-      if(Math.abs(eck.getX() - playerX) <= 7 && Math.abs(eck.getY() - playerY) <= 7){
+   public void getAttacked(int playerX, int playerY, int playerDmg, Boss2Scene boss){
+      if(Math.abs((eck.getX()+(eck.ew/2)) - (playerX+boss.player.w/2)) <= 30 && Math.abs((eck.getY()+(eck.eh/2)) - (playerY+boss.player.h/2)) <= 30){
          eck.health -= playerDmg/2;
       }
    }

@@ -31,10 +31,11 @@ public class ArenaScene extends JPanel{
       myBuffer = myImage.getGraphics();
       stats = pstats;
       player = new Player();
+      stats.health = 100;
       stage = pstats.combStage;
       bckg = new ArenaBackground(stage, this);
       player.style = "still";
-      t = new Timer(5, new AnimationListener());
+      t = new Timer(16, new AnimationListener());
       //debug
       
 
@@ -63,16 +64,15 @@ public class ArenaScene extends JPanel{
       player.move(playerVelocityX, playerVelocityY);
       //add a curWeapon function!!! so much effort :c (for getWEaponDamage) will also help with toolbar
       if(attack){
-         bckg.getAttacked(player.rectX, player.rectY, attack, stats.getWeaponDamage(stats.curWeapon()));
+         bckg.getAttacked(player.rectX, player.rectY, attack, stats.getWeaponDamage(stats.curWeapon())/2);
       }
       bckg.archerAttack(player.rectX, player.rectY, myBuffer);
       stats.health -= bckg.swordsmenAttack(player.rectX, player.rectY);
       stats.health -= bckg.archerAttackDamage(player.rectX, player.rectY);
       
       if(stats.health <= 0){
-         myBuffer.setColor(Color.BLACK);
-         myBuffer.fillRect(0, 0, 700, 700);
-         
+      
+         stats.drawDead(myBuffer);         
       }
       else if(bckg.levelCleared()){
          myBuffer.setColor(Color.BLACK);
@@ -86,7 +86,7 @@ public class ArenaScene extends JPanel{
       else{
          if(stats.health < 100){
             count+= 1;
-            if(count%5 == 0){
+            if(count%(5*stage) == 0){
                stats.health += 1;
             }
          }
@@ -140,6 +140,9 @@ public class ArenaScene extends JPanel{
                stats.combStage += 1;
                f.changeArenaToStart();
             }
+         }
+          else if(e.getKeyCode() == KeyEvent.VK_R && stats.health <= 0){
+            f.dead();
          }
          
             

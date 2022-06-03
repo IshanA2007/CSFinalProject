@@ -18,6 +18,7 @@ abstract class Enemy{
    
    abstract int getX();
    
+   abstract void move(int playerX, int playerY);
    abstract int getY();
    
    abstract int getHealth();

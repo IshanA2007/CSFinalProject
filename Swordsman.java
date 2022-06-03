@@ -27,7 +27,7 @@ public class Swordsman extends Enemy{
       swX = archX;
       swY = archY;
       dmg = stage;
-      health = 5*stage;
+      health = 20*stage;
    }
    
    public void attack(int playerX, int playerY){
@@ -51,6 +51,21 @@ public class Swordsman extends Enemy{
    
    public int getX(){
       return swX;
+   }
+   
+   public void move(int playerX, int playerY){
+      if(swX < playerX){
+         swX += 2;
+      }
+      else if(swX > playerX){
+         swX -= 2;
+      }
+      if(swY > playerY){
+         swY -= 2;
+      }
+      else if(swY < playerY){
+         swY += 2;
+      }
    }
    
    public void subHealth(int dmg){

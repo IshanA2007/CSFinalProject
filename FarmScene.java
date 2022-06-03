@@ -49,10 +49,10 @@ public class FarmScene extends JPanel{
    
    public void generateVeggies(){
       count += 1;
-      if(count%150 == 0){
+      if(count%30  == 0){
          veggies.add(new Carrot());
       }
-      if(count%300==0){
+      if(count%60==0){
          veggies.add(new Potato());
       }
       

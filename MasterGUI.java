@@ -23,7 +23,8 @@ public class MasterGUI extends JPanel{
    BossScene boss1;
    Boss2Scene boss2;
    Boss3Scene boss3;
-   
+   Boss4Scene boss4;
+   VictoryScreen victory;
    JPanel cards; 
    
    public MasterGUI(){
@@ -41,8 +42,8 @@ public class MasterGUI extends JPanel{
       
       cards = new JPanel(new CardLayout());*/
       setLayout(new BorderLayout());
-      boss3 = new Boss3Scene(stats, this);
-      add(boss3);
+      loading = new LoadingScreen(stats, this);
+      add(loading);
       /*add(cards);
       cards.add(shop, "SHOP");
       cards.add(start, "START");
@@ -92,6 +93,15 @@ public class MasterGUI extends JPanel{
       repaint();
    }
    
+   public void changeStartToBoss(){
+      stats = s.getStats();
+      removeAll();
+      boss1 = new BossScene(stats, this);
+      add(boss1);
+      boss1.requestFocus();
+      revalidate();
+      repaint();
+   }
    public void changeStartToFarm(){
       stats = s.getStats();
       removeAll();
@@ -161,7 +171,42 @@ public class MasterGUI extends JPanel{
       revalidate();
       repaint();
    }
+   public void changeBoss2Boss3(){
+      removeAll();
+      stats = boss2.getStats();
+      boss3 = new Boss3Scene(stats, this);
+      add(boss3);
+      boss3.requestFocus();
+      revalidate();
+      repaint();
+   }
    
+   public void changeBoss3Boss4(){
+      removeAll();
+      stats = boss3.getStats();
+      boss4 = new Boss4Scene(stats, this);
+      add(boss4);
+      boss4.requestFocus();
+      revalidate();
+   }
+   
+   public void changeVictory(){
+      removeAll();
+      stats = boss4.getStats();
+      victory = new VictoryScreen(stats, this);
+      add(victory);
+      victory.requestFocus();
+      revalidate();
+   }
+   
+   public void dead(){
+      removeAll();
+      stats = new PlayerStats(0, 0, 100);
+      s = new StartingScene(stats, this);
+      add(s);
+      s.requestFocus();
+      revalidate();
+   }
    
 
    

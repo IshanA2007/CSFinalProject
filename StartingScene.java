@@ -31,6 +31,7 @@ public class StartingScene extends JPanel{
       doors.add(new Door(800, 145));
       doors.add(new Door(1050, 300));
       doors.add(new Door(600, 15));
+      doors.add(new Door(600, 300));
       f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
@@ -145,9 +146,9 @@ public class StartingScene extends JPanel{
                      else if(i == 3){
                         f.changeStartToFarm();
                      }
-                     //else if(i == 4){
-                        //f.changeStartToBoss();
-                     //}
+                     else if(i == 4){
+                        f.changeStartToBoss();
+                     }
                      
                   }
                }

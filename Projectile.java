@@ -9,20 +9,35 @@ import java.io.IOException;
 public class Projectile{
    public int projX, projY;
    public int projDmg;
+   public int fw, fh;
+   BufferedImage FireballImage;
    public Projectile(int archX, int archY, int newDmg){
       projX = archX - 20;
       projY = archY - 5;
       projDmg = newDmg;
+      try{
+         File fireballImg = new File("fireball.png");
+         FireballImage = ImageIO.read(fireballImg);
+         fw = FireballImage.getWidth(null);
+         fh = FireballImage.getHeight(null);
+      }
+      catch(IOException e){
+         System.exit(1);
+      }
    }
    
    public void draw(Graphics g){
-      g.setColor(Color.YELLOW);
-      
-      g.fillRect(projX, projY, 50, 10);
+      g.drawImage(FireballImage, projX, projY, projX + fw/4, projY + fh/4, 0, 0, fw, fh, null);
    }
    
    public void move(int playerX, int playerY){
-      projX -= 6;
+      if(projY - playerY > 0){
+         projY -= 5;
+      }
+      else if(projY - playerY < 0){
+         projY += 5;
+      }
+      projX -= 5;
    }
    
    public int getX(){

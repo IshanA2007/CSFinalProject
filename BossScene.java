@@ -52,16 +52,16 @@ public class BossScene extends JPanel{
    
    public void animate(){
       bckground.draw(myBuffer);
-      if(count <= 500){
+      if(count <= 100){
          bckground.drawWelcome(myBuffer);
       }
-      else if(count <= 1000){
+      else if(count <= 200){
          bckground.drawNoEscape(myBuffer);
       }
-      else if(count <= 1500){
+      else if(count <= 350){
          bckground.drawFightMe(myBuffer);
       }
-      else if(count > 2000){
+      else if(count > 500){
          myBuffer.setColor(Color.BLACK);
          myBuffer.setFont(new Font("Purisa", Font.BOLD, 35));
          myBuffer.drawString("Press 'E' to fight!", 250, 350);
@@ -97,7 +97,7 @@ public class BossScene extends JPanel{
             playerVelocityX -= 3;
             increaseVelocityLeft = false;
          }
-         else if(count > 2000 && e.getKeyCode() == KeyEvent.VK_E){
+         else if(count > 350 && e.getKeyCode() == KeyEvent.VK_E && playerVelocityX == 0 && playerVelocityY == 0){
             f.changeBoss1Boss2();
          }
          

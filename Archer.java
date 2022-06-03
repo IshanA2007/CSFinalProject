@@ -17,7 +17,8 @@ public class Archer extends Enemy{
    public boolean isDefeated = false;
    public boolean shoot = true;
    public int archStage;
-   
+   public int w, h, fw, fh;
+   BufferedImage ArcherImage, FireballImage;
    
    public Archer(int stage){
       curProj = new ArrayList<Projectile>();
@@ -25,11 +26,25 @@ public class Archer extends Enemy{
       health = 10 * archStage;
       Random rand = new Random();
       int upperbound = 200;
-      archX = rand.nextInt(upperbound)+300;
-      archY = rand.nextInt(upperbound+300)+100;
+      archX = 600;
+      archY = 300;
       dmg = 3 * (archStage);
+      try{
+         File archImg = new File("mage.png");
+         ArcherImage=ImageIO.read(archImg);
+         w = ArcherImage.getWidth(null);
+         h = ArcherImage.getHeight(null);
+         File fireballImg = new File("fireball.png");
+         FireballImage = ImageIO.read(fireballImg);
+         fw = FireballImage.getWidth(null);
+         fh = FireballImage.getHeight(null);
+      }
+      catch(IOException e){
+         System.exit(1);
+      }
    }
-   
+   public void move(int playerX, int playerY){
+   }
    public void checkProjectiles(){
       for(int i = 0; i < curProj.size(); i++){
             if(curProj.get(i).getX() < 0){
@@ -96,9 +111,8 @@ public class Archer extends Enemy{
    
    public void draw(Graphics g){
       //archer img here
-      //System.out.println(archX);
-      g.setColor(Color.BLUE);
-      g.fillRect(archX, archY, 5, 10);
+      g.drawImage(ArcherImage, archX, archY, archX + w, archY + h, 0, 0, w, h, null);
+     
    }
 }
      

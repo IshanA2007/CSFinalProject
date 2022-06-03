@@ -21,8 +21,8 @@ public class PlayerStats{
    public int combStage;
    public int money;
    public int count = 0;
-   BufferedImage BookImage;
-   public int bw, bh;
+   BufferedImage BookImage, DeathImage, SkullImage;
+   public int bw, bh, dw, dh, sw, sh;
    
    public PlayerStats(int newDmg, int newShld, int newHlth){
       try{
@@ -30,6 +30,15 @@ public class PlayerStats{
          BookImage = ImageIO.read(bookImg);
          bw = BookImage.getWidth(null);
          bh = BookImage.getHeight(null);
+         File deathImg = new File("deadtext.png");
+         DeathImage = ImageIO.read(deathImg);
+         dw = DeathImage.getWidth(null);
+         dh = DeathImage.getHeight(null);
+         File skullImg = new File("skull.png");
+         SkullImage = ImageIO.read(skullImg);
+         sw = SkullImage.getWidth(null);
+         sh = SkullImage.getHeight(null);
+         
       }
       catch(IOException e){
          System.exit(1);
@@ -138,7 +147,15 @@ public class PlayerStats{
       e.printStackTrace();
     }
  }
-   
+   public void drawDead(Graphics g){
+      g.setColor(Color.BLACK);
+      g.fillRect(0, 0, 700, 700);
+      g.drawImage(DeathImage, 150, 80, 550, 180, 0, 0, dw, dh, null);
+      g.setColor(Color.WHITE);
+      g.setFont(new Font("Purisa", Font.BOLD, 15));
+      g.drawString("Press 'R' to respawn", 300, 250);
+      g.drawImage(SkullImage, 100, 300, 150+sw, 300+sh, 0, 0, sw, sh, null);
+   }
    public void setShield(int newShield){
       shield = newShield;
    }
@@ -199,10 +216,10 @@ public class PlayerStats{
          return 5;
       }
       else if(weapon.equals("Spear")){
-         return 50;
+         return 10;
       }
       else if(weapon.equals("Hammer")){
-         return 200;
+         return 20;
       }
       return 0;
    }

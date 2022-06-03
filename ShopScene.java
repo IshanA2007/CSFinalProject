@@ -37,7 +37,6 @@ public class ShopScene extends JPanel{
       t = new Timer(5, new AnimationListener());
       player = new Player();
       stats = pstats;
-      stats.money = 1020;
       player.style = "still";
       bckg = new ShopBackground(stats);
       addKeyListener(new Key());

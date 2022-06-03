@@ -7,18 +7,18 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Boss3Background{
+public class Boss4Background{
     private BufferedImage bckImg, EckImage;
     int w;
     int h;
     int w1, h1, ew, eh;
     int xPoints[], yPoints[];
     Eck eck;
-    public ArrayList<Minion> minions;
-    public Boss3Background(){
+    public ArrayList<Fireball> fireballs;
+    public Boss4Background(){
       eck = new Eck();
-      eck.health = 500;
-      minions = new ArrayList<Minion>();
+      eck.health = 250;
+      fireballs = new ArrayList<Fireball>();
       try{
          File bckgrndImg = new File("boss.jpg");
          bckImg = ImageIO.read(bckgrndImg);
@@ -58,29 +58,47 @@ public class Boss3Background{
       g.drawString("Boss Health: " + eck.health, 250, 50);
    }
    
-   public void eckAttack(int playerX, int playerY, Boss3Scene boss){
+   public void eckAttack(int playerX, int playerY, Boss4Scene boss){
      if(Math.abs((eck.getX()+(eck.ew/2)) - (playerX+boss.player.w/2)) <= 30 && Math.abs((eck.getY()+(eck.eh/2)) - (playerY+boss.player.h/2)) <= 30){
-         if(minions.size() == 1){
-            minions.remove(0);
-         }
-         boss.stats.health -= (int)(2*(1-(boss.stats.shield/100)));
-         
+         boss.stats.health -= (int)(2*(1-(boss.stats.shield/100))); 
       }
      
       else{
-         if(minions.size() == 1){
-            minions.get(0).draw(boss.myBuffer);
-            minions.get(0).move(playerX, playerY);
-            if(Math.abs((minions.get(0).getX()+minions.get(0).w/2) - (playerX + boss.player.w/2)) <= 15 && Math.abs((minions.get(0).getY()+minions.get(0).h/2) - (playerY + boss.player.h/2)) <= 15){
-               boss.stats.health -= (int)(1.5*(1-(boss.stats.shield/100)));
+         
+         if(fireballs.size() >= 1){
+            for(int i = 0; i < fireballs.size(); i++){
+               fireballs.get(i).move();
+               fireballs.get(i).draw(boss.myBuffer);
             }
-            if(minions.get(0).getHealth() <= 0){
-               minions.remove(0);
+            for(int i = 0; i < fireballs.size(); i++){
+               if(Math.abs((fireballs.get(i).getX()+fireballs.get(i).w/2) - (playerX + boss.player.w/2)) <= 20 && Math.abs((fireballs.get(i).getY()+fireballs.get(i).h/2) - (playerY + boss.player.h/2)) <= 20){
+                  boss.stats.health -= 5;
+               }
             }
+            if(fireballs.get(0).getX() <= 0){
+               fireballs.clear();
+               }
+            }
+            
+            
+         
+         if(fireballs.size() == 0){
+            fireballs.add(new Fireball(eck.getX(), 0));
+            fireballs.add(new Fireball(eck.getX(), 50));
+            fireballs.add(new Fireball(eck.getX(), 100));
+            fireballs.add(new Fireball(eck.getX(), 150));
+            fireballs.add(new Fireball(eck.getX(), 200));
+            fireballs.add(new Fireball(eck.getX(), 250));
+            fireballs.add(new Fireball(eck.getX(), 300));
+            fireballs.add(new Fireball(eck.getX(), 350));
+            fireballs.add(new Fireball(eck.getX(), 400));
+            fireballs.add(new Fireball(eck.getX(), 450));
+            fireballs.add(new Fireball(eck.getX(), 500));
+            fireballs.add(new Fireball(eck.getX(), 550));
+            fireballs.add(new Fireball(eck.getX(), 600));
+            fireballs.add(new Fireball(eck.getX(), 650));
          }
-         if(minions.size() == 0){
-            minions.add(new Minion(eck.getX()-20, eck.getY()));
-         }
+         
       }
    }
    
@@ -91,9 +109,9 @@ public class Boss3Background{
       g.drawImage(EckImage, 520, 500, 700, 700,ew, 0, 0, eh, null);
       g.setFont(new Font("Purisa", Font.BOLD, 13));
       g.setColor(Color.BLACK);
-      g.drawString("Wow, I'm somewhat impressed.", 60, 570);
-      g.drawString("Why defeat you myself when I can summon my MINIONS", 60, 590);
-      g.drawString("Try fighting the ecksters! Mwahahahahaha", 60, 610);
+      g.drawString("You know what, I'm getting tired of you. It's time to finish you.", 60, 570);
+      g.drawString("If you can get past my witherballs, I'll admit defeat.", 60, 590);
+      g.drawString("It's over for you! Mwahahhahahahahahahahaah", 60, 610);
 
    }
    
@@ -105,7 +123,7 @@ public class Boss3Background{
       return eck.health;
    }
    
-   public void moveEck(int playerX, int playerY, boolean charge, Boss2Scene urmom){
+   public void moveEck(int playerX, int playerY, boolean charge, Boss4Scene urmom){
       int moveX = 0;
       int moveY = 0;
       if(charge){
@@ -129,12 +147,9 @@ public class Boss3Background{
       }
    }
    
-   public void getAttacked(int playerX, int playerY, int playerDmg, Boss3Scene boss){
+   public void getAttacked(int playerX, int playerY, int playerDmg, Boss4Scene boss){
       if(Math.abs((eck.getX()+(eck.ew/2)) - (playerX+boss.player.w/2)) <= 20 && Math.abs((eck.getY()+(eck.eh/2)) - (playerY+boss.player.h/2)) <= 20){
          eck.health -= playerDmg/2;
-      }
-      else if(minions.size() == 1 && Math.abs((minions.get(0).getX()+minions.get(0).w/2) - (playerX + boss.player.w/2)) <= 15 && Math.abs((minions.get(0).getY()+minions.get(0).h/2) - (playerY + boss.player.h/2)) <= 15){
-         minions.get(0).health -= playerDmg;
       }
    }
    

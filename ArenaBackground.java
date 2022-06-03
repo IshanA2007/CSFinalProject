@@ -11,7 +11,8 @@ public class ArenaBackground{
    public int stage;
    ArrayList<Enemy> enemies;
    ArenaScene scene;
-   
+   BufferedImage BackgroundImage;
+   public int bw, bh;
    
    public ArenaBackground(int combStage, ArenaScene ascene){
       scene = ascene;
@@ -19,6 +20,15 @@ public class ArenaBackground{
       enemies = new ArrayList<Enemy>();
       enemies.add(new Archer(stage));
       makeSwordsmen();
+      try{
+         File bckImg = new File("arena.png");
+         BackgroundImage = ImageIO.read(bckImg);
+         bw = BackgroundImage.getWidth(null);
+         bh = BackgroundImage.getHeight(null);
+      }
+      catch(IOException e){
+         System.exit(1);
+      }
       
    }
    
@@ -30,8 +40,7 @@ public class ArenaBackground{
    
    public void draw(Graphics g){
       //bckrnd img goes here
-      g.setColor(Color.WHITE);
-      g.fillRect(0, 0, 700, 700);
+      g.drawImage(BackgroundImage, 0, 0, 700, 700, 0, 0, bw, bh, null);
       for(int i = 0; i < enemies.size(); i++){
          enemies.get(i).draw(g);
          int enemyX = enemies.get(i).getX();
@@ -58,7 +67,7 @@ public class ArenaBackground{
          int projX = arch.getProjX();
       
          int projY = arch.getProjY();
-         if(Math.abs(projX - playerX) < 30 && Math.abs(projY - playerY) < 30){
+         if(Math.abs((projX+50) - (playerX + scene.player.w/2)) < 30 && Math.abs((projY-45) - playerY+scene.player.h/2) < 30){
             return arch.getDamage();
          }
          return 0;
@@ -68,7 +77,7 @@ public class ArenaBackground{
       for(int i = 0; i < enemies.size(); i++){  
          int enemyX = enemies.get(i).getX();
          int enemyY = enemies.get(i).getY();
-         if((Math.abs(enemyX - playerX) < 40) && (Math.abs(enemyY - playerY) < 40)){
+         if(Math.abs((enemyX+40) - (playerX+scene.player.w/2)) < 40 && (Math.abs((enemyY+70) - (playerY+scene.player.h/2)) < 40)){
             enemies.get(i).subHealth(weaponDmg);
          }
       }
@@ -81,9 +90,10 @@ public class ArenaBackground{
       }
       else{
          for(int i = 1; i < enemies.size(); i++){
+            enemies.get(i).move(playerX, playerY);
             int enemyX = enemies.get(i).getX();
             int enemyY = enemies.get(i).getY();
-            if((Math.abs(enemyX - playerX) < 20) && (Math.abs(enemyY - playerY) < 20)){
+            if((Math.abs((enemyX+40) - (playerX+scene.player.w/2)) < 20) && (Math.abs((enemyY+50) - (playerY+scene.player.h/2)) < 20)){
                finalDmg += enemies.get(i).getDamage();
             }
          }

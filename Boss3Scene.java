@@ -35,6 +35,7 @@ public class Boss3Scene extends JPanel{
       player = new Player();
       player.style = "still";
       stats = pStats;
+      stats.health = 100;
       t = new Timer(5, new AnimationListener());
       stats.setDamage(stats.getWeaponDamage(stats.curWeapon())/2);
       addKeyListener(new Key());
@@ -55,7 +56,7 @@ public class Boss3Scene extends JPanel{
    public void animate(){
       bckground.draw(myBuffer);
       if(stats.health <= 0){
-         myBuffer.fillRect(0, 0, 700, 700);
+         stats.drawDead(myBuffer);
       }
       else if(count <= 500){
          bckground.drawWelcome(myBuffer);
@@ -64,20 +65,28 @@ public class Boss3Scene extends JPanel{
          bckground.drawEck(myBuffer);
          bckground.eckAttack(player.rectX, player.rectY, this);
          if(attack){
-         bckground.getAttacked(player.rectX, player.rectY, stats.getWeaponDamage(stats.curWeapon()));
+            
+            bckground.getAttacked(player.rectX, player.rectY, stats.getWeaponDamage(stats.curWeapon()), this);
          }
       }
-      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.health, stats.shield);
+      else if(bckground.getEckHealth() <= 250){
+         myBuffer.setFont(new Font("Purisa", Font.BOLD, 30));
+         myBuffer.setColor(Color.BLACK);
+         myBuffer.drawString("Press 'E' to continue", 275, 300);
+      }
+      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.money, stats.shield);
       player.move(playerVelocityX, playerVelocityY);
       if(stats.health > 0 && stats.health < 100){
          if(count % 10 == 0){
-         stats.health += 1;
+            stats.health += 1;
          }
       }
       count+= 1;
       repaint();
    }
-   
+   public PlayerStats getStats(){
+      return stats;
+   }
    private class AnimationListener implements ActionListener
    {
       public void actionPerformed(ActionEvent e)  //Gets called over and over by the Timer
@@ -111,6 +120,12 @@ public class Boss3Scene extends JPanel{
          }
          else if(e.getKeyCode() == KeyEvent.VK_SPACE){
             attack = true;
+         }
+         else if(bckground.getEckHealth() <= 250 && e.getKeyCode() == KeyEvent.VK_E){
+            f.changeBoss3Boss4();
+         }
+          else if(e.getKeyCode() == KeyEvent.VK_R && stats.health <= 0){
+            f.dead();
          }
       }
       

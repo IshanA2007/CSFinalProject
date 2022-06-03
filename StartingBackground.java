@@ -43,12 +43,14 @@ public class StartingBackground{
       g.drawImage(SignImage, 781-referenceX, 65, 781-referenceX+sw*4, 65+sh*4, 0, 0, sw, sh, null);
       g.drawImage(SignImage, 1031-referenceX, 220, 1031-referenceX+sw*4, 220+sh*4, 0, 0, sw, sh, null);
       g.drawImage(SignImage, 575-referenceX, 75, 575-referenceX+(sw*4), 75+(sh*4), 0, 0, sw, sh, null);
+      g.drawImage(SignImage, 575-referenceX, 360, 575-referenceX+(sw*4), 350+(sh*4), 0, 0, sw, sh, null);
       g.setColor(Color.BLACK);
       g.setFont(new Font("Purisa", Font.BOLD, 12));
       g.drawString("Tutorial", 178-referenceX, 115);
       g.drawString("Arena", 831-referenceX, 115);
       g.drawString("Farm", 645-referenceX, 125);
       g.drawString("Shop", 1101-referenceX, 265);
+      g.drawString("Boss", 625-referenceX, 415); 
    
 
       

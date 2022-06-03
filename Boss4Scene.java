@@ -1,14 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.*;
+import javax.imageio.*;
+import java.io.File;
+import java.awt.event.*;
+import java.io.IOException;
 
-public class Boss2Scene extends JPanel{
-
+public class Boss4Scene extends JPanel{
    BufferedImage myImage;
    Graphics myBuffer;
    private Timer t;
-   Boss2Background bckground;
+   Boss4Background bckground;
    private boolean space;
    public int count = 0;
    public int playerVelocityX = 0;
@@ -22,15 +24,14 @@ public class Boss2Scene extends JPanel{
    public int doorNum = 0;
    public boolean isOver = false;
    MasterGUI f;
-   
    public boolean attack = false;
-   public Boss2Scene(PlayerStats pStats, MasterGUI master){
+   public Boss4Scene(PlayerStats pStats, MasterGUI master){
       f = master;
       myImage = new BufferedImage(700, 700, BufferedImage.TYPE_INT_RGB);
       myBuffer = myImage.getGraphics();
       myBuffer.setColor(Color.WHITE);   
       myBuffer.fillRect(0, 0, 700, 700);
-      bckground = new Boss2Background();
+      bckground = new Boss4Background();
       player = new Player();
       player.style = "still";
       stats = pStats;
@@ -47,56 +48,48 @@ public class Boss2Scene extends JPanel{
       t.start();
    }
    
+   public void paintComponent(Graphics g)  //The same method as before!
+   {
+      g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
+   }
    
    public void animate(){
-      
       bckground.draw(myBuffer);
-      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.money, stats.shield);
-      player.move(playerVelocityX, playerVelocityY);
-      if(count <= 100){
+      if(stats.health <= 0){
+         stats.drawDead(myBuffer);
+      }
+      else if(count <= 100){
          bckground.drawWelcome(myBuffer);
       }
-      else if(bckground.getEckHealth() >= 500){
-         //true is the charge (for first part)
+      else if(bckground.getEckHealth() > 0){
          bckground.drawEck(myBuffer);
-         //moveEck also does dmg when close enuf
-         bckground.moveEck(player.rectX, player.rectY, true, this);
+         bckground.eckAttack(player.rectX, player.rectY, this);
          if(attack){
+            
             bckground.getAttacked(player.rectX, player.rectY, stats.getWeaponDamage(stats.curWeapon()), this);
          }
-         
       }
-      
-      else{
+      else if(bckground.getEckHealth() <= 0){
          myBuffer.setFont(new Font("Purisa", Font.BOLD, 30));
-         myBuffer.drawString("Press 'E' to move on", 300, 300);
+         myBuffer.setColor(Color.YELLOW);
+         myBuffer.drawString("Press 'E' to continue!", 275, 300);
       }
-      
+      player.draw(myBuffer, player.style, stats.health, true, stats.curWeapon(), stats.money, stats.shield);
+      player.move(playerVelocityX, playerVelocityY);
       if(stats.health > 0 && stats.health < 100){
          if(count % 10 == 0){
             stats.health += 1;
          }
       }
-      
-      else if(stats.health <= 0){
-         stats.drawDead(myBuffer);
-      }
-         
-        
       count+= 1;
-      repaint();  
-      
+      repaint();
    }
-   
-      public void paintComponent(Graphics g)  //The same method as before!
-   {
-      g.drawImage(myImage, 0, 0, getWidth(), getHeight(), null);  //Draw the buffered image we've stored as a field
+   public void changeScene(){
+      f.changeBoss3Boss4();
    }
-   
    public PlayerStats getStats(){
       return stats;
    }
-   
    private class AnimationListener implements ActionListener
    {
       public void actionPerformed(ActionEvent e)  //Gets called over and over by the Timer
@@ -131,10 +124,10 @@ public class Boss2Scene extends JPanel{
          else if(e.getKeyCode() == KeyEvent.VK_SPACE){
             attack = true;
          }
-         else if(e.getKeyCode() == KeyEvent.VK_E && bckground.getEckHealth() <= 500 && playerVelocityX == 0 && playerVelocityY == 0){
-            f.changeBoss2Boss3();
+         else if(e.getKeyCode() == KeyEvent.VK_E && bckground.getEckHealth() <= 0){
+            f.changeVictory();
          }
-         else if(e.getKeyCode() == KeyEvent.VK_R && stats.health <= 0){
+          else if(e.getKeyCode() == KeyEvent.VK_R && stats.health <= 0){
             f.dead();
          }
       }
@@ -162,3 +155,4 @@ public class Boss2Scene extends JPanel{
       }
    }
 }
+
